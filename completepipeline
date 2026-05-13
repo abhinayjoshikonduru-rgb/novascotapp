@@ -117,7 +117,7 @@ pipeline {
                 echo "Uploading Docker image to S3..."
 
                 withCredentials([usernamePassword(
-                    credentialsId: 's3-cred',
+                    credentialsId: 's3-credentials',
                     usernameVariable: 'AWS_ACCESS_KEY_ID',
                     passwordVariable: 'AWS_SECRET_ACCESS_KEY'
                 )]) {
@@ -164,7 +164,7 @@ pipeline {
                 echo "Downloading Docker image from S3..."
 
                 withCredentials([usernamePassword(
-                    credentialsId: 's3-cred',
+                    credentialsId: 's3-credentials',
                     usernameVariable: 'AWS_ACCESS_KEY_ID',
                     passwordVariable: 'AWS_SECRET_ACCESS_KEY'
                 )]) {
