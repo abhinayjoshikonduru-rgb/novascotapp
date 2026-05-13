@@ -6,12 +6,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <!-- Project Coordinates -->
-    <groupId>in.krishna</groupId>
-    <artifactId>krishnabank</artifactId>
+    <groupId>in.novascotbank</groupId>
+    <artifactId>novascot</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
 
-    <name>krishnabank</name>
+    <name>novascotbank</name>
 
     <!-- Java 1.8 -->
     <properties>
@@ -51,8 +51,8 @@
 
     <!-- Build -->
     <build>
-        <!-- final WAR name = krishnabank.war -->
-        <finalName>krishnabank</finalName>
+        <!-- final WAR name = novascotbank.war -->
+        <finalName>novascotbank</finalName>
 
         <plugins>
 
