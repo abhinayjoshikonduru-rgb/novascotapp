@@ -3,19 +3,19 @@ pipeline {
 
     environment {
 
-        GIT_URL        = 'https://github.com/krishnadekrin/krishnabank.git'
+        GIT_URL        = 'https://github.com/abhinayjoshikonduru-rgb/novascotapp.git'
         BRANCH_NAME    = 'main'
 
-        APP_NAME       = 'krishnabank'
-        WAR_FILE       = 'krishnabank.war'
+        APP_NAME       = 'novascotbank'
+        WAR_FILE       = 'novascot.war'
 
-        SONAR_URL      = 'http://13.233.143.58:9000'
-        SONAR_TOKEN    = 'sqp_6af1484e8f5808f17b87e4cea9854b796aa7c2b4'
+        SONAR_URL      = 'http://43.205.143.229:9000'
+        SONAR_TOKEN    = 'sqp_59d4731b8faa07b8a84a9fc183b1c575a193a1b2'
 
-        IMAGE_NAME     = 'krishnabank-image'
-        CONTAINER_NAME = 'krishnabank-container'
+        IMAGE_NAME     = 'novascot-image'
+        CONTAINER_NAME = 'novascot-container'
 
-        S3_BUCKET      = 'corpbankartifact'
+        S3_BUCKET      = 'aj-artifact-s3'
         AWS_REGION     = 'ap-south-1'
     }
 
@@ -81,8 +81,8 @@ pipeline {
 
                 sh """
                 mvn clean verify sonar:sonar \
-                -Dsonar.projectKey=test1 \
-                -Dsonar.projectName='test1' \
+                -Dsonar.projectKey=abhinayproject1 \
+                -Dsonar.projectName='abhinayproject1' \
                 -Dsonar.host.url=${SONAR_URL} \
                 -Dsonar.token=${SONAR_TOKEN}
                 """
