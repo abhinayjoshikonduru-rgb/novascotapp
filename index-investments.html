@@ -1,0 +1,1061 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Novascot Bank — Investments</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy:       #0B1F3A;
+      --navy-mid:   #112A4E;
+      --navy-light: #1A3A65;
+      --gold:       #C9A84C;
+      --gold-light: #E2C27A;
+      --emerald:    #1A8A5A;
+      --emerald-bg: rgba(26,138,90,0.12);
+      --red:        #C0392B;
+      --red-bg:     rgba(192,57,43,0.12);
+      --slate:      #8CA0B8;
+      --offwhite:   #F4F1EA;
+      --white:      #FFFFFF;
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--navy);
+      color: var(--offwhite);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      line-height: 1.7;
+    }
+
+    /* ── TICKER ── */
+    .ticker {
+      background: var(--navy-mid);
+      border-bottom: 1px solid rgba(201,168,76,0.2);
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      padding: 7px 0;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+    .ticker-track {
+      display: inline-block;
+      animation: ticker 32s linear infinite;
+    }
+    .ticker-track span { margin-right: 48px; color: var(--slate); }
+    .ticker-track .label { color: var(--offwhite); margin-right: 6px; }
+    .up   { color: #4ade80; }
+    .dn   { color: #f87171; }
+    @keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+    /* ── NAV ── */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 8%;
+      background: rgba(11,31,58,0.96);
+      backdrop-filter: blur(12px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid rgba(201,168,76,0.15);
+    }
+    .nav-brand { display: flex; align-items: center; gap: 12px; }
+    .nav-logo {
+      width: 36px; height: 36px;
+      background: var(--gold);
+      border-radius: 6px;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem; font-weight: 700;
+      color: var(--navy);
+    }
+    .nav-brand-text { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--white); }
+    .nav-brand-text small {
+      display: block;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.58rem;
+      color: var(--gold);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+    .nav-links { display: flex; gap: 28px; align-items: center; }
+    .nav-links a {
+      text-decoration: none; color: var(--slate);
+      font-size: 0.87rem; transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--gold); }
+    .nav-links a.active { color: var(--gold); }
+    .nav-cta {
+      padding: 8px 20px;
+      border: 1px solid var(--gold);
+      border-radius: 4px;
+      color: var(--gold) !important;
+      font-weight: 500 !important;
+      transition: background 0.2s !important;
+    }
+    .nav-cta:hover { background: var(--gold) !important; color: var(--navy) !important; }
+
+    /* ── HERO ── */
+    .hero {
+      padding: 80px 8% 60px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      right: -100px; top: -100px;
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(201,168,76,0.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-eyebrow {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.18em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 18px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .hero-eyebrow::before { content: ''; width: 24px; height: 1px; background: var(--gold); }
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1.2;
+      margin-bottom: 20px;
+    }
+    .hero h1 em { font-style: normal; color: var(--gold); }
+    .hero-sub { color: var(--slate); font-size: 0.95rem; max-width: 460px; margin-bottom: 36px; }
+    .hero-btns { display: flex; gap: 14px; flex-wrap: wrap; }
+    .btn-primary {
+      padding: 13px 28px;
+      background: var(--gold);
+      color: var(--navy);
+      border: none; border-radius: 4px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.88rem; font-weight: 500;
+      cursor: pointer; transition: background 0.2s, transform 0.15s;
+      text-decoration: none; display: inline-block;
+    }
+    .btn-primary:hover { background: var(--gold-light); transform: translateY(-1px); }
+    .btn-ghost {
+      padding: 13px 28px;
+      background: transparent;
+      color: var(--offwhite);
+      border: 1px solid rgba(244,241,234,0.25);
+      border-radius: 4px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.88rem;
+      cursor: pointer; transition: border-color 0.2s;
+      text-decoration: none; display: inline-block;
+    }
+    .btn-ghost:hover { border-color: var(--offwhite); }
+
+    /* ── PORTFOLIO WIDGET ── */
+    .portfolio-widget {
+      background: var(--navy-mid);
+      border: 1px solid rgba(201,168,76,0.18);
+      border-radius: 14px;
+      padding: 28px;
+      position: relative;
+      z-index: 1;
+    }
+    .pw-header {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 22px;
+    }
+    .pw-title {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.68rem; letter-spacing: 0.1em;
+      color: var(--slate); text-transform: uppercase;
+    }
+    .pw-live {
+      display: flex; align-items: center; gap: 5px;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.68rem; color: #4ade80;
+    }
+    .pw-live::before {
+      content: ''; width: 6px; height: 6px;
+      background: #4ade80; border-radius: 50%;
+      animation: blink 2s infinite;
+    }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+    .pw-total-label { font-size: 0.78rem; color: var(--slate); }
+    .pw-total {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem; color: var(--white);
+      margin: 4px 0 2px;
+    }
+    .pw-gain { font-size: 0.8rem; color: #4ade80; margin-bottom: 22px; }
+
+    /* Mini chart bars */
+    .mini-chart {
+      display: flex; align-items: flex-end; gap: 4px;
+      height: 48px; margin-bottom: 22px;
+    }
+    .bar {
+      flex: 1; border-radius: 3px 3px 0 0;
+      background: rgba(201,168,76,0.2);
+      transition: background 0.2s;
+    }
+    .bar:hover { background: var(--gold); }
+    .bar.peak { background: rgba(201,168,76,0.5); }
+
+    .pw-holdings { display: flex; flex-direction: column; gap: 10px; }
+    .holding {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .holding-left { display: flex; align-items: center; gap: 10px; }
+    .holding-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+    .holding-name { font-size: 0.86rem; color: var(--white); }
+    .holding-alloc { font-family: 'DM Mono', monospace; font-size: 0.72rem; color: var(--slate); }
+    .holding-right { text-align: right; }
+    .holding-val { font-family: 'DM Mono', monospace; font-size: 0.86rem; color: var(--white); }
+    .holding-chg { font-family: 'DM Mono', monospace; font-size: 0.72rem; }
+
+    /* ── SECTION COMMONS ── */
+    .section-eyebrow {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.68rem; letter-spacing: 0.18em;
+      color: var(--gold); text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.5rem, 2.5vw, 2.2rem);
+      color: var(--white); margin-bottom: 10px;
+    }
+    .section-sub {
+      color: var(--slate); font-size: 0.92rem;
+      max-width: 500px; margin-bottom: 44px;
+    }
+
+    /* ── PRODUCTS ── */
+    .products { padding: 80px 8%; }
+    .products-tabs {
+      display: flex; gap: 0;
+      border: 1px solid rgba(201,168,76,0.2);
+      border-radius: 6px; overflow: hidden;
+      margin-bottom: 40px; width: fit-content;
+    }
+    .tab {
+      padding: 10px 24px;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem; letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--slate); background: transparent;
+      border: none; cursor: pointer;
+      border-right: 1px solid rgba(201,168,76,0.2);
+      transition: background 0.2s, color 0.2s;
+    }
+    .tab:last-child { border-right: none; }
+    .tab.active { background: var(--gold); color: var(--navy); font-weight: 500; }
+    .tab:hover:not(.active) { background: rgba(201,168,76,0.08); color: var(--offwhite); }
+
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+    .product-card {
+      background: var(--navy-mid);
+      border: 1px solid rgba(201,168,76,0.12);
+      border-radius: 12px; padding: 28px 24px;
+      transition: border-color 0.2s, transform 0.2s;
+      position: relative; overflow: hidden;
+    }
+    .product-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: transparent;
+      transition: background 0.2s;
+    }
+    .product-card:hover { border-color: rgba(201,168,76,0.35); transform: translateY(-3px); }
+    .product-card:hover::before { background: var(--gold); }
+    .product-card.featured { border-color: var(--gold); }
+    .product-card.featured::before { background: var(--gold); }
+    .product-tag {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.62rem; letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 3px 10px; border-radius: 20px;
+      margin-bottom: 16px; display: inline-block;
+    }
+    .tag-equity   { background: rgba(56,189,248,0.12); color: #7dd3fc; }
+    .tag-debt     { background: rgba(201,168,76,0.12); color: var(--gold); }
+    .tag-hybrid   { background: rgba(168,85,247,0.12); color: #c4b5fd; }
+    .tag-alt      { background: rgba(251,146,60,0.12); color: #fdba74; }
+    .product-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.05rem; color: var(--white);
+      margin-bottom: 8px;
+    }
+    .product-card p { font-size: 0.83rem; color: var(--slate); margin-bottom: 18px; line-height: 1.6; }
+    .product-returns {
+      display: flex; gap: 16px; margin-bottom: 20px;
+    }
+    .ret-item { }
+    .ret-val {
+      font-family: 'DM Mono', monospace;
+      font-size: 1.1rem; color: #4ade80; display: block;
+    }
+    .ret-val.mod { color: var(--gold); }
+    .ret-label { font-size: 0.72rem; color: var(--slate); }
+    .product-divider {
+      height: 1px; background: rgba(255,255,255,0.06);
+      margin-bottom: 16px;
+    }
+    .product-meta {
+      display: flex; justify-content: space-between;
+      font-family: 'DM Mono', monospace; font-size: 0.7rem;
+      color: var(--slate);
+    }
+    .product-meta .risk-low    { color: #4ade80; }
+    .product-meta .risk-medium { color: var(--gold); }
+    .product-meta .risk-high   { color: #f87171; }
+
+    /* ── PERFORMANCE TABLE ── */
+    .performance { padding: 80px 8%; background: var(--navy-mid); }
+    .perf-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 44px;
+      font-size: 0.87rem;
+    }
+    .perf-table thead tr {
+      border-bottom: 1px solid rgba(201,168,76,0.2);
+    }
+    .perf-table th {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.68rem; letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--slate); font-weight: 400;
+      padding: 12px 16px; text-align: left;
+    }
+    .perf-table th:not(:first-child) { text-align: right; }
+    .perf-table tbody tr {
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      transition: background 0.15s;
+    }
+    .perf-table tbody tr:hover { background: rgba(201,168,76,0.04); }
+    .perf-table td {
+      padding: 14px 16px; color: var(--offwhite);
+    }
+    .perf-table td:not(:first-child) {
+      text-align: right;
+      font-family: 'DM Mono', monospace; font-size: 0.82rem;
+    }
+    .perf-table td.pos { color: #4ade80; }
+    .perf-table td.neg { color: #f87171; }
+    .fund-name { font-weight: 500; color: var(--white); }
+    .fund-type {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.68rem; color: var(--slate);
+      margin-top: 2px;
+    }
+    .risk-pill {
+      display: inline-block;
+      padding: 2px 10px; border-radius: 20px;
+      font-family: 'DM Mono', monospace; font-size: 0.65rem;
+    }
+    .rp-low    { background: rgba(74,222,128,0.1); color: #4ade80; }
+    .rp-medium { background: rgba(201,168,76,0.1); color: var(--gold); }
+    .rp-high   { background: rgba(248,113,113,0.1); color: #f87171; }
+
+    /* ── SIP CALCULATOR ── */
+    .sip { padding: 80px 8%; }
+    .sip-inner {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 60px; align-items: start;
+    }
+    .sip-form { display: flex; flex-direction: column; gap: 24px; }
+    .sip-field label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.68rem; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--slate);
+      display: block; margin-bottom: 8px;
+    }
+    .sip-field-row {
+      display: flex; justify-content: space-between;
+      align-items: center; margin-bottom: 6px;
+    }
+    .sip-field-row span {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.9rem; color: var(--gold);
+    }
+    input[type="range"] {
+      width: 100%; height: 4px;
+      background: rgba(201,168,76,0.2);
+      border-radius: 2px; outline: none;
+      -webkit-appearance: none; cursor: pointer;
+    }
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 16px; height: 16px;
+      background: var(--gold); border-radius: 50%;
+    }
+    .sip-result {
+      background: var(--navy-mid);
+      border: 1px solid rgba(201,168,76,0.2);
+      border-radius: 12px; padding: 32px;
+    }
+    .sip-result-title {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.68rem; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--slate);
+      margin-bottom: 24px;
+    }
+    .sip-result-row {
+      display: flex; justify-content: space-between;
+      align-items: center; padding: 14px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .sip-result-row:last-child { border-bottom: none; }
+    .sip-result-label { font-size: 0.85rem; color: var(--slate); }
+    .sip-result-val {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.95rem; color: var(--white);
+    }
+    .sip-result-val.highlight {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem; color: var(--gold);
+    }
+    .sip-disclaimer {
+      font-size: 0.72rem; color: var(--slate);
+      margin-top: 16px; line-height: 1.5;
+    }
+
+    /* ── WHY NOVASCOT ── */
+    .why { padding: 80px 8%; background: var(--navy-mid); }
+    .why-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 1px; background: rgba(201,168,76,0.1);
+      border: 1px solid rgba(201,168,76,0.1);
+      border-radius: 10px; overflow: hidden;
+      margin-top: 44px;
+    }
+    .why-item {
+      background: var(--navy-mid); padding: 32px 24px;
+      transition: background 0.2s;
+    }
+    .why-item:hover { background: var(--navy-light); }
+    .why-icon { font-size: 1.5rem; margin-bottom: 14px; display: block; }
+    .why-item h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem; color: var(--white);
+      margin-bottom: 8px;
+    }
+    .why-item p { font-size: 0.82rem; color: var(--slate); line-height: 1.6; }
+
+    /* ── CTA BANNER ── */
+    .cta-banner {
+      margin: 0 8% 80px;
+      background: linear-gradient(135deg, var(--navy-light), var(--navy-mid));
+      border: 1px solid rgba(201,168,76,0.25);
+      border-radius: 14px;
+      padding: 52px 56px;
+      display: flex; justify-content: space-between; align-items: center;
+      gap: 40px;
+    }
+    .cta-banner h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.7rem; color: var(--white);
+      margin-bottom: 8px;
+    }
+    .cta-banner p { color: var(--slate); font-size: 0.9rem; max-width: 440px; }
+    .cta-actions { display: flex; gap: 14px; flex-shrink: 0; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #060f1c;
+      padding: 48px 8% 28px;
+      border-top: 1px solid rgba(201,168,76,0.1);
+    }
+    .footer-top {
+      display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 40px; margin-bottom: 36px;
+    }
+    .footer-brand p { color: var(--slate); font-size: 0.83rem; margin-top: 10px; max-width: 240px; }
+    .footer-col h4 {
+      font-family: 'DM Mono', monospace; font-size: 0.65rem;
+      letter-spacing: 0.15em; color: var(--gold);
+      text-transform: uppercase; margin-bottom: 14px;
+    }
+    .footer-col a {
+      display: block; text-decoration: none;
+      color: var(--slate); font-size: 0.83rem;
+      margin-bottom: 9px; transition: color 0.2s;
+    }
+    .footer-col a:hover { color: var(--offwhite); }
+    .footer-bottom {
+      display: flex; justify-content: space-between; align-items: center;
+      padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.05);
+      flex-wrap: wrap; gap: 10px;
+    }
+    .footer-bottom p { color: var(--slate); font-size: 0.76rem; }
+    .footer-disc {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.64rem; color: rgba(140,160,184,0.45);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .hero, .sip-inner { grid-template-columns: 1fr; }
+      .portfolio-widget { display: none; }
+      .products-grid { grid-template-columns: 1fr 1fr; }
+      .why-grid { grid-template-columns: 1fr 1fr; }
+      .cta-banner { flex-direction: column; padding: 36px 28px; }
+      .footer-top { grid-template-columns: 1fr 1fr; }
+      .nav-links { display: none; }
+      .perf-table { font-size: 0.78rem; }
+    }
+    @media (max-width: 560px) {
+      .products-grid { grid-template-columns: 1fr; }
+      .why-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-track">
+    <span><span class="label">NIFTY 50</span>24,312.45 <span class="up">▲ 0.62%</span></span>
+    <span><span class="label">SENSEX</span>79,844.12 <span class="up">▲ 0.51%</span></span>
+    <span><span class="label">NIFTY MF</span>8,214.30 <span class="dn">▼ 0.18%</span></span>
+    <span><span class="label">GOLD</span>₹71,240/10g <span class="up">▲ 0.34%</span></span>
+    <span><span class="label">10Y GSEC</span>7.02% <span class="dn">▼ 2bps</span></span>
+    <span><span class="label">USD/INR</span>83.42 <span class="dn">▼ 0.09%</span></span>
+    <span><span class="label">REPO</span>6.50%</span>
+    <span><span class="label">NIFTY 50</span>24,312.45 <span class="up">▲ 0.62%</span></span>
+    <span><span class="label">SENSEX</span>79,844.12 <span class="up">▲ 0.51%</span></span>
+    <span><span class="label">NIFTY MF</span>8,214.30 <span class="dn">▼ 0.18%</span></span>
+    <span><span class="label">GOLD</span>₹71,240/10g <span class="up">▲ 0.34%</span></span>
+    <span><span class="label">10Y GSEC</span>7.02% <span class="dn">▼ 2bps</span></span>
+    <span><span class="label">USD/INR</span>83.42 <span class="dn">▼ 0.09%</span></span>
+    <span><span class="label">REPO</span>6.50%</span>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-brand">
+    <div class="nav-logo">N</div>
+    <div class="nav-brand-text">Novascot Bank
+      <small>Investments</small>
+    </div>
+  </div>
+  <div class="nav-links">
+    <a href="#products">Products</a>
+    <a href="#performance">Fund Performance</a>
+    <a href="#sip">SIP Calculator</a>
+    <a href="#contact">Contact</a>
+    <a href="#contact" class="nav-cta">Start Investing</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div>
+    <div class="hero-eyebrow">Wealth &amp; Investments</div>
+    <h1>Grow wealth with<br><em>intention</em>, not just<br>optimism</h1>
+    <p class="hero-sub">Novascot's investment platform gives you access to curated mutual funds, bonds, and alternative assets — managed by experts, monitored by you.</p>
+    <div class="hero-btns">
+      <a href="#products" class="btn-primary">Explore Funds</a>
+      <a href="#sip" class="btn-ghost">Calculate Returns</a>
+    </div>
+  </div>
+  <div class="portfolio-widget">
+    <div class="pw-header">
+      <div class="pw-title">My Portfolio</div>
+      <div class="pw-live">Live</div>
+    </div>
+    <div class="pw-total-label">Total Portfolio Value</div>
+    <div class="pw-total">₹18,42,610</div>
+    <div class="pw-gain">↑ ₹2,14,380 (13.2%) overall gain</div>
+    <div class="mini-chart">
+      <div class="bar" style="height:30%"></div>
+      <div class="bar" style="height:42%"></div>
+      <div class="bar" style="height:38%"></div>
+      <div class="bar" style="height:55%"></div>
+      <div class="bar" style="height:48%"></div>
+      <div class="bar" style="height:62%"></div>
+      <div class="bar" style="height:58%"></div>
+      <div class="bar" style="height:70%"></div>
+      <div class="bar" style="height:65%"></div>
+      <div class="bar peak" style="height:80%"></div>
+      <div class="bar" style="height:74%"></div>
+      <div class="bar" style="height:88%"></div>
+    </div>
+    <div class="pw-holdings">
+      <div class="holding">
+        <div class="holding-left">
+          <div class="holding-dot" style="background:#38bdf8"></div>
+          <div>
+            <div class="holding-name">Novascot Bluechip Fund</div>
+            <div class="holding-alloc">42% allocation</div>
+          </div>
+        </div>
+        <div class="holding-right">
+          <div class="holding-val">₹7,73,896</div>
+          <div class="holding-chg up">+16.4%</div>
+        </div>
+      </div>
+      <div class="holding">
+        <div class="holding-left">
+          <div class="holding-dot" style="background:#c9a84c"></div>
+          <div>
+            <div class="holding-name">Novascot Debt Plus</div>
+            <div class="holding-alloc">31% allocation</div>
+          </div>
+        </div>
+        <div class="holding-right">
+          <div class="holding-val">₹5,71,209</div>
+          <div class="holding-chg up">+7.8%</div>
+        </div>
+      </div>
+      <div class="holding">
+        <div class="holding-left">
+          <div class="holding-dot" style="background:#a78bfa"></div>
+          <div>
+            <div class="holding-name">Novascot Alt Assets</div>
+            <div class="holding-alloc">27% allocation</div>
+          </div>
+        </div>
+        <div class="holding-right">
+          <div class="holding-val">₹4,97,505</div>
+          <div class="holding-chg up">+11.2%</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCTS -->
+<section class="products" id="products">
+  <div class="section-eyebrow">Investment Products</div>
+  <h2 class="section-title">Funds for every risk appetite</h2>
+  <p class="section-sub">From capital preservation to high-growth equity, Novascot offers a curated shelf of investment products backed by rigorous research.</p>
+  <div class="products-tabs">
+    <button class="tab active">All Funds</button>
+    <button class="tab">Equity</button>
+    <button class="tab">Debt</button>
+    <button class="tab">Hybrid</button>
+    <button class="tab">Alternatives</button>
+  </div>
+  <div class="products-grid">
+    <div class="product-card featured">
+      <span class="product-tag tag-equity">Equity</span>
+      <h3>Novascot Bluechip Fund</h3>
+      <p>Large-cap focused fund investing in India's top 100 companies by market cap. Suitable for long-term wealth creation.</p>
+      <div class="product-returns">
+        <div class="ret-item">
+          <span class="ret-val">18.4%</span>
+          <div class="ret-label">3Y CAGR</div>
+        </div>
+        <div class="ret-item">
+          <span class="ret-val">22.1%</span>
+          <div class="ret-label">5Y CAGR</div>
+        </div>
+        <div class="ret-item">
+          <span class="ret-val mod">₹500</span>
+          <div class="ret-label">Min SIP</div>
+        </div>
+      </div>
+      <div class="product-divider"></div>
+      <div class="product-meta">
+        <span>AUM: ₹4,280 Cr</span>
+        <span class="risk-high">● High Risk</span>
+      </div>
+    </div>
+    <div class="product-card">
+      <span class="product-tag tag-debt">Debt</span>
+      <h3>Novascot Debt Plus</h3>
+      <p>Short to medium duration bond fund investing in high-quality corporate and government securities.</p>
+      <div class="product-returns">
+        <div class="ret-item">
+          <span class="ret-val">7.8%</span>
+          <div class="ret-label">3Y CAGR</div>
+        </div>
+        <div class="ret-item">
+          <span class="ret-val">8.2%</span>
+          <div class="ret-label">5Y CAGR</div>
+        </div>
+        <div class="ret-item">
+          <span class="ret-val mod">₹1,000</span>
+          <div class="ret-label">Min SIP</div>
+        </div>
+      </div>
+      <div class="product-divider"></div>
+      <div class="product-meta">
+        <span>AUM: ₹2,140 Cr</span>
+        <span class="risk-low">● Low Risk</span>
+      </div>
+    </div>
+    <div class="product-card">
+      <span class="product-tag tag-hybrid">Hybrid</span>
+      <h3>Novascot Balanced Advantage</h3>
+      <p>Dynamic asset allocation between equity and debt based on market valuations. All-weather fund.</p>
+      <div class="product-returns">
+        <div class="ret-item">
+          <span class="ret-val">12.6%</span>
+          <div class="ret-label">3Y CAGR</div>
+        </div>
+        <div class="ret-item">
+          <span class="ret-val">14.3%</span>
+          <div class="ret-label">5Y CAGR</div>
+        </div>
+        <div class="ret-item">
+          <span class="ret-val mod">₹500</span>
+          <div class="ret-label">Min SIP</div>
+        </div>
+      </div>
+      <div class="product-divider"></div>
+      <div class="product-meta">
+        <span>AUM: ₹3,560 Cr</span>
+        <span class="risk-medium">● Medium Risk</span>
+      </div>
+    </div>
+    <div class="product-card">
+      <span class="product-tag tag-equity">Equity</span>
+      <h3>Novascot Midcap Growth</h3>
+      <p>Concentrated portfolio of 40–50 high-conviction midcap businesses with 5+ year growth runways.</p>
+      <div class="product-returns">
+        <div class="ret-item">
+          <span class="ret-val">24.7%</span>
+          <div class="ret-label">3Y CAGR</div>
+        </div>
+        <div class="ret-item">
+          <span class="ret-val">27.9%</span>
+          <div class="ret-label">5Y CAGR</div>
+        </div>
+        <div class="ret-item">
+          <span class="ret-val mod">₹1,000</span>
+          <div class="ret-label">Min SIP</div>
+        </div>
+      </div>
+      <div class="product-divider"></div>
+      <div class="product-meta">
+        <span>AUM: ₹1,820 Cr</span>
+        <span class="risk-high">● High Risk</span>
+      </div>
+    </div>
+    <div class="product-card">
+      <span class="product-tag tag-alt">Alternatives</span>
+      <h3>Novascot REIT Index Fund</h3>
+      <p>Passive exposure to India's listed Real Estate Investment Trusts — earn rental yield plus capital growth.</p>
+      <div class="product-returns">
+        <div class="ret-item">
+          <span class="ret-val">11.2%</span>
+          <div class="ret-label">3Y CAGR</div>
+        </div>
+        <div class="ret-item">
+          <span class="ret-val">—</span>
+          <div class="ret-label">5Y CAGR</div>
+        </div>
+        <div class="ret-item">
+          <span class="ret-val mod">₹5,000</span>
+          <div class="ret-label">Min Lump</div>
+        </div>
+      </div>
+      <div class="product-divider"></div>
+      <div class="product-meta">
+        <span>AUM: ₹680 Cr</span>
+        <span class="risk-medium">● Medium Risk</span>
+      </div>
+    </div>
+    <div class="product-card">
+      <span class="product-tag tag-debt">Debt</span>
+      <h3>Novascot Liquid Fund</h3>
+      <p>Park surplus funds with T+1 redemption. Invests exclusively in overnight and liquid money market instruments.</p>
+      <div class="product-returns">
+        <div class="ret-item">
+          <span class="ret-val">6.9%</span>
+          <div class="ret-label">3Y CAGR</div>
+        </div>
+        <div class="ret-item">
+          <span class="ret-val">7.1%</span>
+          <div class="ret-label">5Y CAGR</div>
+        </div>
+        <div class="ret-item">
+          <span class="ret-val mod">₹500</span>
+          <div class="ret-label">Min SIP</div>
+        </div>
+      </div>
+      <div class="product-divider"></div>
+      <div class="product-meta">
+        <span>AUM: ₹5,100 Cr</span>
+        <span class="risk-low">● Low Risk</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PERFORMANCE TABLE -->
+<section class="performance" id="performance">
+  <div class="section-eyebrow">Fund Performance</div>
+  <h2 class="section-title">Returns as of June 2026</h2>
+  <p class="section-sub">Past performance is not a guarantee of future returns. All figures are NAV-based absolute returns.</p>
+  <table class="perf-table">
+    <thead>
+      <tr>
+        <th>Fund Name</th>
+        <th>1M</th>
+        <th>3M</th>
+        <th>6M</th>
+        <th>1Y</th>
+        <th>3Y</th>
+        <th>Risk</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><div class="fund-name">Novascot Bluechip Fund</div><div class="fund-type">Large Cap Equity</div></td>
+        <td class="pos">+2.1%</td>
+        <td class="pos">+6.4%</td>
+        <td class="pos">+9.8%</td>
+        <td class="pos">+21.3%</td>
+        <td class="pos">+18.4%</td>
+        <td><span class="risk-pill rp-high">High</span></td>
+      </tr>
+      <tr>
+        <td><div class="fund-name">Novascot Midcap Growth</div><div class="fund-type">Mid Cap Equity</div></td>
+        <td class="pos">+3.4%</td>
+        <td class="pos">+8.9%</td>
+        <td class="pos">+14.2%</td>
+        <td class="pos">+31.6%</td>
+        <td class="pos">+24.7%</td>
+        <td><span class="risk-pill rp-high">High</span></td>
+      </tr>
+      <tr>
+        <td><div class="fund-name">Novascot Balanced Advantage</div><div class="fund-type">Hybrid / BAF</div></td>
+        <td class="pos">+1.2%</td>
+        <td class="pos">+3.8%</td>
+        <td class="pos">+6.1%</td>
+        <td class="pos">+14.8%</td>
+        <td class="pos">+12.6%</td>
+        <td><span class="risk-pill rp-medium">Medium</span></td>
+      </tr>
+      <tr>
+        <td><div class="fund-name">Novascot REIT Index Fund</div><div class="fund-type">Alternatives</div></td>
+        <td class="neg">−0.4%</td>
+        <td class="pos">+2.1%</td>
+        <td class="pos">+4.8%</td>
+        <td class="pos">+10.2%</td>
+        <td class="pos">+11.2%</td>
+        <td><span class="risk-pill rp-medium">Medium</span></td>
+      </tr>
+      <tr>
+        <td><div class="fund-name">Novascot Debt Plus</div><div class="fund-type">Short Duration Debt</div></td>
+        <td class="pos">+0.6%</td>
+        <td class="pos">+1.8%</td>
+        <td class="pos">+3.7%</td>
+        <td class="pos">+7.9%</td>
+        <td class="pos">+7.8%</td>
+        <td><span class="risk-pill rp-low">Low</span></td>
+      </tr>
+      <tr>
+        <td><div class="fund-name">Novascot Liquid Fund</div><div class="fund-type">Liquid / Money Market</div></td>
+        <td class="pos">+0.6%</td>
+        <td class="pos">+1.7%</td>
+        <td class="pos">+3.4%</td>
+        <td class="pos">+7.1%</td>
+        <td class="pos">+6.9%</td>
+        <td><span class="risk-pill rp-low">Low</span></td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- SIP CALCULATOR -->
+<section class="sip" id="sip">
+  <div class="sip-inner">
+    <div>
+      <div class="section-eyebrow">SIP Calculator</div>
+      <h2 class="section-title">See what consistent<br>investing looks like</h2>
+      <p class="section-sub">Adjust the sliders to estimate the future value of your monthly SIP investments over time.</p>
+      <div class="sip-form">
+        <div class="sip-field">
+          <div class="sip-field-row">
+            <label>Monthly SIP Amount</label>
+            <span id="sipAmt">₹10,000</span>
+          </div>
+          <input type="range" id="sipSlider" min="500" max="100000" step="500" value="10000"
+            oninput="calcSip()">
+        </div>
+        <div class="sip-field">
+          <div class="sip-field-row">
+            <label>Expected Annual Return</label>
+            <span id="sipRate">12%</span>
+          </div>
+          <input type="range" id="rateSlider" min="4" max="30" step="0.5" value="12"
+            oninput="calcSip()">
+        </div>
+        <div class="sip-field">
+          <div class="sip-field-row">
+            <label>Investment Duration</label>
+            <span id="sipYears">10 yrs</span>
+          </div>
+          <input type="range" id="yearSlider" min="1" max="40" step="1" value="10"
+            oninput="calcSip()">
+        </div>
+      </div>
+    </div>
+    <div class="sip-result">
+      <div class="sip-result-title">Projected Outcome</div>
+      <div class="sip-result-row">
+        <div class="sip-result-label">Total Amount Invested</div>
+        <div class="sip-result-val" id="totalInvested">₹12,00,000</div>
+      </div>
+      <div class="sip-result-row">
+        <div class="sip-result-label">Estimated Returns</div>
+        <div class="sip-result-val" id="estReturns" style="color:#4ade80">₹11,00,784</div>
+      </div>
+      <div class="sip-result-row">
+        <div class="sip-result-label">Total Corpus</div>
+        <div class="sip-result-val highlight" id="totalCorpus">₹23,00,784</div>
+      </div>
+      <div class="sip-result-row">
+        <div class="sip-result-label">Wealth Gained</div>
+        <div class="sip-result-val" id="wealthGain" style="color:#4ade80">91.7%</div>
+      </div>
+      <p class="sip-disclaimer">* Projections are for illustrative purposes only. Mutual fund investments are subject to market risks. Please read all scheme-related documents carefully.</p>
+      <a href="#contact" class="btn-primary" style="display:block;text-align:center;margin-top:20px;">Start This SIP →</a>
+    </div>
+  </div>
+</section>
+
+<!-- WHY -->
+<section class="why" id="why">
+  <div class="section-eyebrow">Why Novascot</div>
+  <h2 class="section-title">Built on discipline, not hype</h2>
+  <p class="section-sub">What separates Novascot's investment platform from the noise.</p>
+  <div class="why-grid">
+    <div class="why-item">
+      <span class="why-icon">🔬</span>
+      <h3>Research-Led Selection</h3>
+      <p>Every fund on our platform passes a 40-point due diligence framework before being offered to clients.</p>
+    </div>
+    <div class="why-item">
+      <span class="why-icon">📊</span>
+      <h3>Real-Time Portfolio Tracking</h3>
+      <p>Monitor NAVs, XIRR, and asset allocation across all your investments from a single dashboard.</p>
+    </div>
+    <div class="why-item">
+      <span class="why-icon">🛡️</span>
+      <h3>SEBI Registered</h3>
+      <p>Novascot Investment Services is a SEBI-registered investment advisor and AMFI-registered mutual fund distributor.</p>
+    </div>
+    <div class="why-item">
+      <span class="why-icon">🤝</span>
+      <h3>Dedicated Wealth Manager</h3>
+      <p>High-net-worth clients get a dedicated relationship manager available for portfolio reviews and rebalancing.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA BANNER -->
+<div class="cta-banner">
+  <div>
+    <h2>Start investing in under 10 minutes</h2>
+    <p>Complete your KYC online, link your bank account, and make your first investment — all from your phone or laptop.</p>
+  </div>
+  <div class="cta-actions">
+    <a href="#contact" class="btn-primary">Open Investment Account</a>
+    <a href="#products" class="btn-ghost">Browse Funds</a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="nav-brand">
+        <div class="nav-logo">N</div>
+        <div style="font-family:'Playfair Display',serif;font-size:1rem;color:var(--white);">Novascot Bank</div>
+      </div>
+      <p>Institutional-grade investing made accessible to every serious investor.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Products</h4>
+      <a href="#">Equity Funds</a>
+      <a href="#">Debt Funds</a>
+      <a href="#">Hybrid Funds</a>
+      <a href="#">Alternatives</a>
+      <a href="#">Fixed Deposits</a>
+    </div>
+    <div class="footer-col">
+      <h4>Tools</h4>
+      <a href="#">SIP Calculator</a>
+      <a href="#">Lumpsum Calculator</a>
+      <a href="#">Risk Profiler</a>
+      <a href="#">Fund Comparison</a>
+    </div>
+    <div class="footer-col">
+      <h4>Legal</h4>
+      <a href="#">SEBI Disclosures</a>
+      <a href="#">Risk Factors</a>
+      <a href="#">Privacy Policy</a>
+      <a href="#">Grievance Redressal</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 Novascot Investment Services Ltd. All rights reserved.</p>
+    <p class="footer-disc">SEBI Reg. No. INA000012345 · AMFI Reg. No. ARN-98765 · Mutual fund investments are subject to market risks</p>
+  </div>
+</footer>
+
+<script>
+  function fmt(n) {
+    if (n >= 10000000) return '₹' + (n/10000000).toFixed(2) + ' Cr';
+    if (n >= 100000)   return '₹' + (n/100000).toFixed(2) + ' L';
+    return '₹' + n.toLocaleString('en-IN');
+  }
+
+  function calcSip() {
+    const P = parseFloat(document.getElementById('sipSlider').value);
+    const r = parseFloat(document.getElementById('rateSlider').value) / 100 / 12;
+    const n = parseFloat(document.getElementById('yearSlider').value) * 12;
+
+    document.getElementById('sipAmt').textContent   = '₹' + P.toLocaleString('en-IN');
+    document.getElementById('sipRate').textContent  = document.getElementById('rateSlider').value + '%';
+    document.getElementById('sipYears').textContent = document.getElementById('yearSlider').value + ' yrs';
+
+    const corpus   = P * ((Math.pow(1 + r, n) - 1) / r) * (1 + r);
+    const invested = P * n;
+    const returns  = corpus - invested;
+    const gain     = ((returns / invested) * 100).toFixed(1);
+
+    document.getElementById('totalInvested').textContent = fmt(Math.round(invested));
+    document.getElementById('estReturns').textContent    = fmt(Math.round(returns));
+    document.getElementById('totalCorpus').textContent   = fmt(Math.round(corpus));
+    document.getElementById('wealthGain').textContent    = gain + '%';
+  }
+
+  // Tab switching (visual only)
+  document.querySelectorAll('.tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+    });
+  });
+
+  calcSip();
+</script>
+</body>
+</html>
