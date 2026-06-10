@@ -1,0 +1,1340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Novascot Bank — Retail Banking</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy:        #0B1F3A;
+      --navy-mid:    #112A4E;
+      --navy-light:  #1A3A65;
+      --teal:        #0D7A6B;
+      --teal-light:  #12A08E;
+      --teal-bg:     rgba(13,122,107,0.12);
+      --gold:        #C9A84C;
+      --gold-light:  #E2C27A;
+      --slate:       #8CA0B8;
+      --offwhite:    #F2F6FA;
+      --white:       #FFFFFF;
+      --surface:     #0F2540;
+      --card-border: rgba(13,122,107,0.2);
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--navy);
+      color: var(--offwhite);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      line-height: 1.7;
+    }
+
+    /* ── TOP BAR ── */
+    .topbar {
+      background: var(--teal);
+      padding: 8px 8%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.85);
+    }
+    .topbar a { color: inherit; text-decoration: none; margin-left: 20px; }
+    .topbar a:hover { color: var(--white); }
+    .topbar-left { display: flex; align-items: center; gap: 6px; }
+
+    /* ── NAV ── */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 8%;
+      background: rgba(11,31,58,0.97);
+      backdrop-filter: blur(12px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid rgba(13,122,107,0.25);
+    }
+    .nav-brand { display: flex; align-items: center; gap: 12px; }
+    .nav-logo {
+      width: 38px; height: 38px;
+      background: var(--teal);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem; font-weight: 700;
+      color: var(--white);
+    }
+    .nav-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem; color: var(--white);
+    }
+    .nav-name small {
+      display: block;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.58rem; color: var(--teal-light);
+      letter-spacing: 0.15em; text-transform: uppercase;
+    }
+    .nav-links { display: flex; gap: 26px; align-items: center; }
+    .nav-links a {
+      text-decoration: none; color: var(--slate);
+      font-size: 0.87rem; transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--teal-light); }
+    .nav-btn {
+      padding: 9px 22px;
+      background: var(--teal);
+      color: var(--white) !important;
+      border-radius: 6px;
+      font-weight: 500 !important;
+      font-size: 0.85rem !important;
+      transition: background 0.2s !important;
+    }
+    .nav-btn:hover { background: var(--teal-light) !important; }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 90vh;
+      display: grid;
+      grid-template-columns: 55% 45%;
+      align-items: center;
+      padding: 0 8%;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 70% 60% at 90% 40%, rgba(13,122,107,0.1) 0%, transparent 65%),
+        radial-gradient(ellipse 40% 50% at 5% 90%, rgba(26,58,101,0.5) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .hero-content { position: relative; z-index: 1; }
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--teal-bg);
+      border: 1px solid rgba(13,122,107,0.3);
+      border-radius: 20px;
+      padding: 5px 14px;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.68rem; letter-spacing: 0.12em;
+      color: var(--teal-light); text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+    .hero-eyebrow::before {
+      content: ''; width: 6px; height: 6px;
+      background: var(--teal-light); border-radius: 50%;
+    }
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.2rem, 4vw, 3.4rem);
+      font-weight: 700; color: var(--white);
+      line-height: 1.18; margin-bottom: 22px;
+    }
+    .hero h1 .accent { color: var(--teal-light); }
+    .hero-sub {
+      color: var(--slate); font-size: 1rem;
+      max-width: 500px; margin-bottom: 40px;
+      line-height: 1.7;
+    }
+    .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 48px; }
+    .btn-primary {
+      padding: 14px 30px;
+      background: var(--teal);
+      color: var(--white);
+      border: none; border-radius: 6px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem; font-weight: 500;
+      cursor: pointer; transition: background 0.2s, transform 0.15s;
+      text-decoration: none; display: inline-block;
+    }
+    .btn-primary:hover { background: var(--teal-light); transform: translateY(-1px); }
+    .btn-outline {
+      padding: 14px 30px;
+      background: transparent;
+      color: var(--offwhite);
+      border: 1px solid rgba(242,246,250,0.25);
+      border-radius: 6px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      cursor: pointer; transition: border-color 0.2s;
+      text-decoration: none; display: inline-block;
+    }
+    .btn-outline:hover { border-color: var(--offwhite); }
+
+    .hero-trust {
+      display: flex; gap: 28px; flex-wrap: wrap;
+    }
+    .trust-badge {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 0.82rem; color: var(--slate);
+    }
+    .trust-badge-icon {
+      width: 28px; height: 28px;
+      background: var(--teal-bg);
+      border-radius: 6px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.85rem;
+    }
+
+    /* ── HERO CARD PANEL ── */
+    .hero-panel {
+      display: flex; flex-direction: column; gap: 14px;
+      position: relative; z-index: 1;
+      padding-left: 20px;
+    }
+    .hcard {
+      background: var(--surface);
+      border: 1px solid var(--card-border);
+      border-radius: 12px; padding: 20px 22px;
+      transition: border-color 0.2s;
+    }
+    .hcard:hover { border-color: rgba(13,122,107,0.5); }
+    .hcard-top {
+      display: flex; justify-content: space-between; align-items: flex-start;
+      margin-bottom: 10px;
+    }
+    .hcard-icon {
+      width: 36px; height: 36px;
+      background: var(--teal-bg);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem;
+    }
+    .hcard-badge {
+      font-family: 'DM Mono', monospace; font-size: 0.65rem;
+      padding: 3px 10px; border-radius: 20px;
+    }
+    .badge-teal { background: var(--teal-bg); color: var(--teal-light); }
+    .badge-gold { background: rgba(201,168,76,0.12); color: var(--gold); }
+    .badge-green { background: rgba(74,222,128,0.1); color: #4ade80; }
+    .hcard-label { font-size: 0.78rem; color: var(--slate); margin-bottom: 3px; }
+    .hcard-val {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem; color: var(--white);
+    }
+    .hcard-sub { font-size: 0.75rem; color: var(--slate); margin-top: 4px; }
+
+    /* ── QUICK SERVICES ── */
+    .quick {
+      background: var(--surface);
+      border-top: 1px solid rgba(13,122,107,0.2);
+      border-bottom: 1px solid rgba(13,122,107,0.2);
+      padding: 0 8%;
+    }
+    .quick-inner {
+      display: grid; grid-template-columns: repeat(6, 1fr);
+    }
+    .quick-item {
+      display: flex; flex-direction: column; align-items: center;
+      padding: 28px 16px; gap: 10px;
+      border-right: 1px solid rgba(13,122,107,0.15);
+      cursor: pointer; transition: background 0.2s;
+      text-decoration: none;
+    }
+    .quick-item:last-child { border-right: none; }
+    .quick-item:hover { background: var(--teal-bg); }
+    .quick-icon {
+      width: 44px; height: 44px;
+      background: var(--teal-bg);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem;
+      transition: background 0.2s;
+    }
+    .quick-item:hover .quick-icon { background: rgba(13,122,107,0.3); }
+    .quick-label {
+      font-size: 0.78rem; color: var(--slate);
+      text-align: center; line-height: 1.3;
+    }
+
+    /* ── SECTION HELPERS ── */
+    .eyebrow {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.68rem; letter-spacing: 0.18em;
+      color: var(--teal-light); text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .sec-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.5rem, 2.5vw, 2.2rem);
+      color: var(--white); margin-bottom: 10px;
+    }
+    .sec-sub {
+      color: var(--slate); font-size: 0.92rem;
+      max-width: 500px; margin-bottom: 44px;
+    }
+
+    /* ── ACCOUNTS ── */
+    .accounts { padding: 80px 8%; }
+    .accounts-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+    .acct-card {
+      background: var(--surface);
+      border: 1px solid var(--card-border);
+      border-radius: 14px; padding: 32px 26px;
+      position: relative; transition: transform 0.2s, border-color 0.2s;
+    }
+    .acct-card:hover { transform: translateY(-4px); border-color: rgba(13,122,107,0.5); }
+    .acct-card.featured {
+      border-color: var(--teal);
+      background: linear-gradient(145deg, rgba(13,122,107,0.08), var(--surface));
+    }
+    .acct-feat-label {
+      position: absolute; top: -11px; left: 24px;
+      background: var(--teal); color: var(--white);
+      font-family: 'DM Mono', monospace; font-size: 0.62rem;
+      font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 3px 12px; border-radius: 20px;
+    }
+    .acct-icon {
+      width: 46px; height: 46px;
+      background: var(--teal-bg);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.3rem; margin-bottom: 16px;
+    }
+    .acct-type {
+      font-family: 'DM Mono', monospace; font-size: 0.65rem;
+      letter-spacing: 0.12em; color: var(--teal-light);
+      text-transform: uppercase; margin-bottom: 6px;
+    }
+    .acct-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem; color: var(--white); margin-bottom: 8px;
+    }
+    .acct-card p { font-size: 0.84rem; color: var(--slate); margin-bottom: 22px; }
+    .acct-perks { list-style: none; margin-bottom: 26px; }
+    .acct-perks li {
+      font-size: 0.84rem; color: var(--slate);
+      padding: 7px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      display: flex; align-items: center; gap: 10px;
+    }
+    .acct-perks li::before {
+      content: '✓'; color: var(--teal-light);
+      font-size: 0.72rem; flex-shrink: 0;
+    }
+    .acct-rate {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem; color: var(--teal-light);
+      margin-bottom: 4px;
+    }
+    .acct-rate span { font-family: 'DM Sans', sans-serif; font-size: 0.85rem; color: var(--slate); }
+
+    /* ── LOANS ── */
+    .loans { padding: 80px 8%; background: var(--surface); }
+    .loans-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 16px; margin-top: 44px;
+    }
+    .loan-card {
+      background: var(--navy-mid);
+      border: 1px solid var(--card-border);
+      border-radius: 12px; padding: 26px 22px;
+      transition: border-color 0.2s, background 0.2s;
+      cursor: pointer;
+    }
+    .loan-card:hover { border-color: var(--teal); background: rgba(13,122,107,0.06); }
+    .loan-icon { font-size: 1.6rem; margin-bottom: 14px; display: block; }
+    .loan-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem; color: var(--white); margin-bottom: 6px;
+    }
+    .loan-card p { font-size: 0.82rem; color: var(--slate); margin-bottom: 18px; line-height: 1.6; }
+    .loan-rate-row { display: flex; justify-content: space-between; align-items: center; }
+    .loan-rate {
+      font-family: 'DM Mono', monospace;
+      font-size: 1rem; color: var(--teal-light);
+    }
+    .loan-rate-label { font-size: 0.7rem; color: var(--slate); }
+    .loan-arrow { color: var(--teal-light); font-size: 1rem; transition: transform 0.2s; }
+    .loan-card:hover .loan-arrow { transform: translateX(4px); }
+
+    /* ── EMI CALCULATOR ── */
+    .emi-section { padding: 80px 8%; }
+    .emi-inner {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 60px; align-items: start;
+    }
+    .emi-form { display: flex; flex-direction: column; gap: 26px; }
+    .emi-field-label {
+      display: flex; justify-content: space-between;
+      font-family: 'DM Mono', monospace; font-size: 0.68rem;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--slate); margin-bottom: 10px;
+    }
+    .emi-field-label span { color: var(--teal-light); font-size: 0.88rem; }
+    input[type="range"] {
+      width: 100%; height: 4px;
+      background: rgba(13,122,107,0.25);
+      border-radius: 2px; outline: none;
+      -webkit-appearance: none; cursor: pointer;
+    }
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 16px; height: 16px;
+      background: var(--teal); border-radius: 50%;
+      box-shadow: 0 0 0 3px rgba(13,122,107,0.2);
+    }
+    .loan-type-select {
+      width: 100%;
+      background: var(--surface);
+      border: 1px solid var(--card-border);
+      border-radius: 6px; padding: 12px 16px;
+      color: var(--offwhite);
+      font-family: 'DM Sans', sans-serif; font-size: 0.88rem;
+      outline: none; transition: border-color 0.2s;
+    }
+    .loan-type-select:focus { border-color: var(--teal); }
+    .loan-type-select option { background: var(--navy-mid); }
+
+    .emi-result {
+      background: var(--surface);
+      border: 1px solid var(--card-border);
+      border-radius: 14px; padding: 34px;
+    }
+    .emi-result-title {
+      font-family: 'DM Mono', monospace; font-size: 0.68rem;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--slate); margin-bottom: 26px;
+    }
+    .emi-big {
+      text-align: center;
+      padding: 24px 0; margin-bottom: 24px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .emi-big-label { font-size: 0.8rem; color: var(--slate); margin-bottom: 6px; }
+    .emi-big-val {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.4rem; color: var(--teal-light);
+    }
+    .emi-big-sub { font-size: 0.75rem; color: var(--slate); margin-top: 4px; }
+    .emi-breakdown { display: flex; flex-direction: column; gap: 0; }
+    .emi-row {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 13px 0; border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .emi-row:last-child { border-bottom: none; }
+    .emi-row-label { font-size: 0.85rem; color: var(--slate); }
+    .emi-row-val { font-family: 'DM Mono', monospace; font-size: 0.9rem; color: var(--white); }
+    .emi-row-val.interest { color: #f87171; }
+    .emi-apply {
+      display: block; text-align: center; margin-top: 22px;
+      padding: 13px; background: var(--teal);
+      color: var(--white); border-radius: 6px;
+      text-decoration: none; font-size: 0.88rem; font-weight: 500;
+      transition: background 0.2s;
+    }
+    .emi-apply:hover { background: var(--teal-light); }
+
+    /* ── DIGITAL BANKING ── */
+    .digital { padding: 80px 8%; background: var(--surface); }
+    .digital-inner {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 70px; align-items: center;
+    }
+    .digital-features { margin-top: 36px; display: flex; flex-direction: column; gap: 20px; }
+    .dfeat {
+      display: flex; gap: 16px; align-items: flex-start;
+      padding: 18px; border-radius: 10px;
+      border: 1px solid transparent;
+      transition: border-color 0.2s, background 0.2s;
+      cursor: default;
+    }
+    .dfeat:hover { border-color: var(--card-border); background: rgba(13,122,107,0.05); }
+    .dfeat-icon {
+      width: 38px; height: 38px; flex-shrink: 0;
+      background: var(--teal-bg); border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem;
+    }
+    .dfeat h4 {
+      font-family: 'DM Sans', sans-serif; font-weight: 500;
+      font-size: 0.93rem; color: var(--white); margin-bottom: 4px;
+    }
+    .dfeat p { font-size: 0.82rem; color: var(--slate); line-height: 1.6; }
+
+    /* Phone mockup */
+    .phone-mockup {
+      background: var(--navy-mid);
+      border: 1px solid rgba(13,122,107,0.25);
+      border-radius: 28px; padding: 22px;
+      max-width: 300px; margin: 0 auto;
+    }
+    .pm-header {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 20px;
+    }
+    .pm-greeting { font-size: 0.78rem; color: var(--slate); }
+    .pm-name { font-family: 'Playfair Display', serif; font-size: 1rem; color: var(--white); }
+    .pm-notif {
+      width: 32px; height: 32px; background: var(--teal-bg);
+      border-radius: 8px; display: flex; align-items: center; justify-content: center;
+      font-size: 0.9rem;
+    }
+    .pm-balance {
+      background: linear-gradient(135deg, var(--teal), #0a5a4f);
+      border-radius: 14px; padding: 20px;
+      margin-bottom: 16px;
+    }
+    .pm-bal-label { font-size: 0.72rem; color: rgba(255,255,255,0.7); margin-bottom: 4px; }
+    .pm-bal-amt {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem; color: var(--white);
+    }
+    .pm-bal-acct { font-size: 0.7rem; color: rgba(255,255,255,0.6); margin-top: 6px; font-family: 'DM Mono', monospace; }
+    .pm-actions {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 8px; margin-bottom: 18px;
+    }
+    .pm-action {
+      display: flex; flex-direction: column; align-items: center;
+      gap: 5px; padding: 10px 6px;
+      background: rgba(13,122,107,0.1); border-radius: 8px;
+    }
+    .pm-action-icon { font-size: 1rem; }
+    .pm-action-label { font-size: 0.58rem; color: var(--slate); text-align: center; }
+    .pm-txns { display: flex; flex-direction: column; gap: 10px; }
+    .pm-txn {
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .pm-txn-left { display: flex; align-items: center; gap: 8px; }
+    .pm-txn-ico {
+      width: 28px; height: 28px; background: var(--teal-bg);
+      border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 0.75rem;
+    }
+    .pm-txn-name { font-size: 0.78rem; color: var(--white); }
+    .pm-txn-date { font-size: 0.65rem; color: var(--slate); }
+    .pm-txn-amt { font-family: 'DM Mono', monospace; font-size: 0.78rem; }
+    .cr { color: #4ade80; } .dr { color: #f87171; }
+
+    /* ── CARDS ── */
+    .cards-section { padding: 80px 8%; }
+    .cards-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 18px; margin-top: 44px;
+    }
+    .card-item {
+      background: var(--surface); border: 1px solid var(--card-border);
+      border-radius: 14px; overflow: hidden;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+    .card-item:hover { transform: translateY(-4px); border-color: var(--teal); }
+    .card-visual {
+      height: 140px; padding: 20px 22px;
+      display: flex; flex-direction: column; justify-content: space-between;
+      position: relative;
+    }
+    .cv-classic  { background: linear-gradient(135deg, #0D7A6B, #0a5a4f); }
+    .cv-gold     { background: linear-gradient(135deg, #8B6914, #C9A84C); }
+    .cv-platinum { background: linear-gradient(135deg, #2c3e50, #4a5568); }
+    .card-chip { font-size: 1.1rem; }
+    .card-num {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.78rem; color: rgba(255,255,255,0.7);
+      letter-spacing: 0.1em;
+    }
+    .card-type {
+      position: absolute; top: 18px; right: 18px;
+      font-family: 'Playfair Display', serif;
+      font-size: 0.85rem; color: rgba(255,255,255,0.8); font-style: italic;
+    }
+    .card-info { padding: 20px 22px; }
+    .card-info h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem; color: var(--white); margin-bottom: 6px;
+    }
+    .card-info p { font-size: 0.82rem; color: var(--slate); margin-bottom: 14px; }
+    .card-perks { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; }
+    .perk-tag {
+      font-family: 'DM Mono', monospace; font-size: 0.62rem;
+      padding: 3px 10px; border-radius: 20px;
+      background: var(--teal-bg); color: var(--teal-light);
+    }
+
+    /* ── BRANCH LOCATOR ── */
+    .branch { padding: 80px 8%; background: var(--surface); }
+    .branch-inner {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 60px; align-items: start; margin-top: 44px;
+    }
+    .branch-search {
+      display: flex; gap: 0;
+      border: 1px solid var(--card-border);
+      border-radius: 8px; overflow: hidden;
+      margin-bottom: 24px;
+    }
+    .branch-input {
+      flex: 1; background: var(--navy-mid);
+      border: none; padding: 13px 16px;
+      color: var(--offwhite);
+      font-family: 'DM Sans', sans-serif; font-size: 0.88rem;
+      outline: none;
+    }
+    .branch-input::placeholder { color: var(--slate); }
+    .branch-search-btn {
+      padding: 13px 20px; background: var(--teal);
+      border: none; color: var(--white);
+      cursor: pointer; font-size: 0.88rem; font-weight: 500;
+      font-family: 'DM Sans', sans-serif;
+      transition: background 0.2s;
+    }
+    .branch-search-btn:hover { background: var(--teal-light); }
+    .branch-list { display: flex; flex-direction: column; gap: 12px; }
+    .branch-item {
+      background: var(--navy-mid); border: 1px solid var(--card-border);
+      border-radius: 10px; padding: 16px 18px;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .branch-item h4 { font-size: 0.9rem; color: var(--white); margin-bottom: 3px; }
+    .branch-item p { font-size: 0.78rem; color: var(--slate); }
+    .branch-dist {
+      font-family: 'DM Mono', monospace; font-size: 0.72rem;
+      color: var(--teal-light); flex-shrink: 0; margin-left: 12px;
+    }
+    .branch-map {
+      background: var(--navy-mid);
+      border: 1px solid var(--card-border);
+      border-radius: 14px; height: 320px;
+      display: flex; align-items: center; justify-content: center;
+      flex-direction: column; gap: 12px;
+      color: var(--slate); font-size: 0.85rem;
+    }
+    .branch-map-icon { font-size: 2.5rem; opacity: 0.4; }
+
+    /* ── OPEN ACCOUNT ── */
+    .open-acct { padding: 80px 8%; }
+    .open-inner {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 70px; align-items: start;
+    }
+    .open-steps { margin-top: 30px; display: flex; flex-direction: column; gap: 0; }
+    .ostep {
+      display: flex; gap: 20px;
+      padding: 20px 0; border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .ostep:last-child { border-bottom: none; }
+    .ostep-num {
+      font-family: 'DM Mono', monospace; font-size: 0.72rem;
+      color: var(--teal-light);
+      background: var(--teal-bg);
+      border: 1px solid rgba(13,122,107,0.3);
+      border-radius: 50%; width: 32px; height: 32px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .ostep h4 {
+      font-family: 'DM Sans', sans-serif; font-weight: 500;
+      font-size: 0.92rem; color: var(--white); margin-bottom: 4px;
+    }
+    .ostep p { font-size: 0.82rem; color: var(--slate); }
+    .open-form { display: flex; flex-direction: column; gap: 16px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .fgroup { display: flex; flex-direction: column; gap: 6px; }
+    .fgroup label {
+      font-family: 'DM Mono', monospace; font-size: 0.65rem;
+      letter-spacing: 0.1em; text-transform: uppercase; color: var(--slate);
+    }
+    .fgroup input, .fgroup select {
+      background: var(--surface);
+      border: 1px solid var(--card-border);
+      border-radius: 6px; padding: 11px 14px;
+      color: var(--offwhite);
+      font-family: 'DM Sans', sans-serif; font-size: 0.87rem;
+      outline: none; transition: border-color 0.2s;
+    }
+    .fgroup input:focus, .fgroup select:focus { border-color: var(--teal); }
+    .fgroup select option { background: var(--navy-mid); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #060f1c;
+      padding: 50px 8% 28px;
+      border-top: 1px solid rgba(13,122,107,0.15);
+    }
+    .footer-grid {
+      display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 40px; margin-bottom: 36px;
+    }
+    .footer-brand p { color: var(--slate); font-size: 0.83rem; margin-top: 10px; max-width: 250px; }
+    .footer-col h4 {
+      font-family: 'DM Mono', monospace; font-size: 0.65rem;
+      letter-spacing: 0.15em; color: var(--teal-light);
+      text-transform: uppercase; margin-bottom: 14px;
+    }
+    .footer-col a {
+      display: block; text-decoration: none;
+      color: var(--slate); font-size: 0.83rem;
+      margin-bottom: 9px; transition: color 0.2s;
+    }
+    .footer-col a:hover { color: var(--offwhite); }
+    .footer-bottom {
+      display: flex; justify-content: space-between; align-items: center;
+      padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.05);
+      flex-wrap: wrap; gap: 10px;
+    }
+    .footer-bottom p { color: var(--slate); font-size: 0.76rem; }
+    .footer-reg {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.63rem; color: rgba(140,160,184,0.4);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1000px) {
+      .quick-inner { grid-template-columns: repeat(3, 1fr); }
+      .loans-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: 1fr; min-height: auto; padding: 60px 8%; }
+      .hero-panel { display: none; }
+      .accounts-grid, .cards-grid { grid-template-columns: 1fr 1fr; }
+      .emi-inner, .digital-inner, .branch-inner, .open-inner { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .nav-links { display: none; }
+    }
+    @media (max-width: 560px) {
+      .accounts-grid, .cards-grid, .loans-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="topbar-left">📍 Find nearest branch &nbsp;|&nbsp; Mon–Sat: 9:00 AM – 5:00 PM</div>
+  <div>
+    <a href="#">Internet Banking</a>
+    <a href="#">Mobile App</a>
+    <a href="#">1800-102-NOVA</a>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-brand">
+    <div class="nav-logo">N</div>
+    <div class="nav-name">Novascot Bank
+      <small>Retail Banking</small>
+    </div>
+  </div>
+  <div class="nav-links">
+    <a href="#accounts">Accounts</a>
+    <a href="#loans">Loans</a>
+    <a href="#cards">Cards</a>
+    <a href="#digital">Digital Banking</a>
+    <a href="#open" class="nav-btn">Open Account</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">Personal Banking</div>
+    <h1>Banking that fits<br>around <span class="accent">your life</span>,<br>not the other way</h1>
+    <p class="hero-sub">Open a savings account in 10 minutes, get instant loans, and manage everything from your phone. Novascot is built for real people, real needs.</p>
+    <div class="hero-actions">
+      <a href="#open" class="btn-primary">Open Account Free</a>
+      <a href="#loans" class="btn-outline">Check Loan Rates</a>
+    </div>
+    <div class="hero-trust">
+      <div class="trust-badge">
+        <div class="trust-badge-icon">🏛️</div>
+        RBI Scheduled Bank
+      </div>
+      <div class="trust-badge">
+        <div class="trust-badge-icon">🛡️</div>
+        DICGC Insured
+      </div>
+      <div class="trust-badge">
+        <div class="trust-badge-icon">⚡</div>
+        Instant KYC
+      </div>
+    </div>
+  </div>
+  <div class="hero-panel">
+    <div class="hcard">
+      <div class="hcard-top">
+        <div class="hcard-icon">💰</div>
+        <span class="hcard-badge badge-teal">Active</span>
+      </div>
+      <div class="hcard-label">Savings Account Balance</div>
+      <div class="hcard-val">₹1,84,240</div>
+      <div class="hcard-sub">● 7.0% p.a. interest rate</div>
+    </div>
+    <div class="hcard">
+      <div class="hcard-top">
+        <div class="hcard-icon">🏠</div>
+        <span class="hcard-badge badge-gold">EMI Active</span>
+      </div>
+      <div class="hcard-label">Home Loan — Next EMI</div>
+      <div class="hcard-val">₹22,400</div>
+      <div class="hcard-sub">Due in 8 days · Auto-debit on</div>
+    </div>
+    <div class="hcard">
+      <div class="hcard-top">
+        <div class="hcard-icon">💳</div>
+        <span class="hcard-badge badge-green">2,840 pts</span>
+      </div>
+      <div class="hcard-label">Nova Gold Card — Reward Points</div>
+      <div class="hcard-val">₹2,840</div>
+      <div class="hcard-sub">Redeemable against bill payment</div>
+    </div>
+  </div>
+</section>
+
+<!-- QUICK SERVICES -->
+<div class="quick">
+  <div class="quick-inner">
+    <a href="#" class="quick-item">
+      <div class="quick-icon">↗️</div>
+      <div class="quick-label">Transfer Money</div>
+    </a>
+    <a href="#" class="quick-item">
+      <div class="quick-icon">📄</div>
+      <div class="quick-label">Pay Bills</div>
+    </a>
+    <a href="#" class="quick-item">
+      <div class="quick-icon">📱</div>
+      <div class="quick-label">Mobile Recharge</div>
+    </a>
+    <a href="#" class="quick-item">
+      <div class="quick-icon">🏦</div>
+      <div class="quick-label">Fixed Deposit</div>
+    </a>
+    <a href="#" class="quick-item">
+      <div class="quick-icon">📊</div>
+      <div class="quick-label">Account Statement</div>
+    </a>
+    <a href="#" class="quick-item">
+      <div class="quick-icon">🆘</div>
+      <div class="quick-label">Block Card</div>
+    </a>
+  </div>
+</div>
+
+<!-- ACCOUNTS -->
+<section class="accounts" id="accounts">
+  <div class="eyebrow">Savings &amp; Deposits</div>
+  <h2 class="sec-title">Find the right account for you</h2>
+  <p class="sec-sub">Whether you're saving for tomorrow or parking funds short-term, Novascot has an account that earns more.</p>
+  <div class="accounts-grid">
+    <div class="acct-card">
+      <div class="acct-icon">💼</div>
+      <div class="acct-type">Basic Savings</div>
+      <h3>Nova Savings Account</h3>
+      <p>Zero minimum balance. Earn interest every quarter on your daily balance.</p>
+      <div class="acct-rate">7.0% <span>p.a. interest</span></div>
+      <ul class="acct-perks">
+        <li>Zero minimum balance</li>
+        <li>Free debit card for life</li>
+        <li>UPI &amp; NEFT unlimited</li>
+        <li>Instant account opening</li>
+      </ul>
+      <a href="#open" class="btn-primary" style="display:block;text-align:center;">Open Now</a>
+    </div>
+    <div class="acct-card featured">
+      <span class="acct-feat-label">Most Popular</span>
+      <div class="acct-icon">⭐</div>
+      <div class="acct-type">Premium Savings</div>
+      <h3>Nova Prime Account</h3>
+      <p>Higher interest, premium card, and exclusive lifestyle benefits for modern earners.</p>
+      <div class="acct-rate">7.5% <span>p.a. interest</span></div>
+      <ul class="acct-perks">
+        <li>₹10,000 min balance</li>
+        <li>Nova Gold debit card</li>
+        <li>5X reward points on spends</li>
+        <li>Free locker (first year)</li>
+        <li>Priority branch service</li>
+      </ul>
+      <a href="#open" class="btn-primary" style="display:block;text-align:center;">Open Now</a>
+    </div>
+    <div class="acct-card">
+      <div class="acct-icon">🏦</div>
+      <div class="acct-type">Fixed Deposit</div>
+      <h3>Nova Fixed Deposit</h3>
+      <p>Lock in high returns for 7 days to 10 years. Premature withdrawal allowed.</p>
+      <div class="acct-rate">8.25% <span>p.a. up to</span></div>
+      <ul class="acct-perks">
+        <li>Minimum ₹1,000 deposit</li>
+        <li>Monthly/quarterly payout</li>
+        <li>Auto-renewal option</li>
+        <li>Loan against FD available</li>
+      </ul>
+      <a href="#open" class="btn-outline" style="display:block;text-align:center;border-color:rgba(13,122,107,0.4);color:var(--teal-light)">Book FD</a>
+    </div>
+  </div>
+</section>
+
+<!-- LOANS -->
+<section class="loans" id="loans">
+  <div class="eyebrow">Loans &amp; Credit</div>
+  <h2 class="sec-title">Borrow smarter</h2>
+  <p class="sec-sub">Competitive rates, fast approval, and flexible repayment — for every goal from a new home to a family vacation.</p>
+  <div class="loans-grid">
+    <div class="loan-card">
+      <span class="loan-icon">🏠</span>
+      <h3>Home Loan</h3>
+      <p>Finance your dream home with loans up to ₹5 Cr and tenure up to 30 years.</p>
+      <div class="loan-rate-row">
+        <div>
+          <div class="loan-rate">8.40%</div>
+          <div class="loan-rate-label">p.a. onwards</div>
+        </div>
+        <span class="loan-arrow">→</span>
+      </div>
+    </div>
+    <div class="loan-card">
+      <span class="loan-icon">🚗</span>
+      <h3>Car Loan</h3>
+      <p>Up to 100% on-road financing for new and used vehicles. Approval in 4 hours.</p>
+      <div class="loan-rate-row">
+        <div>
+          <div class="loan-rate">8.75%</div>
+          <div class="loan-rate-label">p.a. onwards</div>
+        </div>
+        <span class="loan-arrow">→</span>
+      </div>
+    </div>
+    <div class="loan-card">
+      <span class="loan-icon">🎓</span>
+      <h3>Education Loan</h3>
+      <p>Finance studies in India or abroad. Moratorium available until course completion.</p>
+      <div class="loan-rate-row">
+        <div>
+          <div class="loan-rate">9.50%</div>
+          <div class="loan-rate-label">p.a. onwards</div>
+        </div>
+        <span class="loan-arrow">→</span>
+      </div>
+    </div>
+    <div class="loan-card">
+      <span class="loan-icon">💳</span>
+      <h3>Personal Loan</h3>
+      <p>Instant pre-approved loans up to ₹25L. Funds in your account within 2 hours.</p>
+      <div class="loan-rate-row">
+        <div>
+          <div class="loan-rate">10.99%</div>
+          <div class="loan-rate-label">p.a. onwards</div>
+        </div>
+        <span class="loan-arrow">→</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EMI CALCULATOR -->
+<section class="emi-section" id="emi">
+  <div class="emi-inner">
+    <div>
+      <div class="eyebrow">EMI Calculator</div>
+      <h2 class="sec-title">Know your EMI<br>before you apply</h2>
+      <p class="sec-sub">Drag the sliders to estimate your monthly instalment for any loan type.</p>
+      <div class="emi-form">
+        <div>
+          <div class="emi-field-label">
+            <label>Loan Type</label>
+          </div>
+          <select class="loan-type-select" id="loanType" onchange="calcEmi()">
+            <option value="8.40">Home Loan — 8.40%</option>
+            <option value="8.75">Car Loan — 8.75%</option>
+            <option value="9.50">Education Loan — 9.50%</option>
+            <option value="10.99" selected>Personal Loan — 10.99%</option>
+          </select>
+        </div>
+        <div>
+          <div class="emi-field-label">
+            <label>Loan Amount</label>
+            <span id="loanAmtLbl">₹5,00,000</span>
+          </div>
+          <input type="range" id="loanAmt" min="50000" max="5000000" step="50000" value="500000" oninput="calcEmi()">
+        </div>
+        <div>
+          <div class="emi-field-label">
+            <label>Loan Tenure</label>
+            <span id="loanTenureLbl">3 years</span>
+          </div>
+          <input type="range" id="loanTenure" min="1" max="30" step="1" value="3" oninput="calcEmi()">
+        </div>
+      </div>
+    </div>
+    <div class="emi-result">
+      <div class="emi-result-title">Monthly Repayment</div>
+      <div class="emi-big">
+        <div class="emi-big-label">Your EMI</div>
+        <div class="emi-big-val" id="emiVal">₹16,369</div>
+        <div class="emi-big-sub">per month for <span id="emiMonths">36</span> months</div>
+      </div>
+      <div class="emi-breakdown">
+        <div class="emi-row">
+          <div class="emi-row-label">Principal Amount</div>
+          <div class="emi-row-val" id="emiPrincipal">₹5,00,000</div>
+        </div>
+        <div class="emi-row">
+          <div class="emi-row-label">Total Interest Payable</div>
+          <div class="emi-row-val interest" id="emiInterest">₹89,284</div>
+        </div>
+        <div class="emi-row">
+          <div class="emi-row-label">Total Amount Payable</div>
+          <div class="emi-row-val" id="emiTotal">₹5,89,284</div>
+        </div>
+      </div>
+      <a href="#open" class="emi-apply">Apply for This Loan →</a>
+    </div>
+  </div>
+</section>
+
+<!-- DIGITAL BANKING -->
+<section class="digital" id="digital">
+  <div class="digital-inner">
+    <div class="phone-mockup">
+      <div class="pm-header">
+        <div>
+          <div class="pm-greeting">Good morning,</div>
+          <div class="pm-name">Abhinay 👋</div>
+        </div>
+        <div class="pm-notif">🔔</div>
+      </div>
+      <div class="pm-balance">
+        <div class="pm-bal-label">Available Balance</div>
+        <div class="pm-bal-amt">₹1,84,240</div>
+        <div class="pm-bal-acct">NOVA •••• 4821 · Savings</div>
+      </div>
+      <div class="pm-actions">
+        <div class="pm-action"><div class="pm-action-icon">↗️</div><div class="pm-action-label">Send</div></div>
+        <div class="pm-action"><div class="pm-action-icon">↙️</div><div class="pm-action-label">Request</div></div>
+        <div class="pm-action"><div class="pm-action-icon">📄</div><div class="pm-action-label">Pay Bill</div></div>
+        <div class="pm-action"><div class="pm-action-icon">➕</div><div class="pm-action-label">More</div></div>
+      </div>
+      <div class="pm-txns">
+        <div class="pm-txn">
+          <div class="pm-txn-left">
+            <div class="pm-txn-ico">🛒</div>
+            <div>
+              <div class="pm-txn-name">Amazon Pay</div>
+              <div class="pm-txn-date">Today</div>
+            </div>
+          </div>
+          <div class="pm-txn-amt dr">−₹1,849</div>
+        </div>
+        <div class="pm-txn">
+          <div class="pm-txn-left">
+            <div class="pm-txn-ico">💼</div>
+            <div>
+              <div class="pm-txn-name">Salary Credit</div>
+              <div class="pm-txn-date">Jun 1</div>
+            </div>
+          </div>
+          <div class="pm-txn-amt cr">+₹68,000</div>
+        </div>
+        <div class="pm-txn">
+          <div class="pm-txn-left">
+            <div class="pm-txn-ico">⚡</div>
+            <div>
+              <div class="pm-txn-name">Electricity Bill</div>
+              <div class="pm-txn-date">May 31</div>
+            </div>
+          </div>
+          <div class="pm-txn-amt dr">−₹2,140</div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="eyebrow">NovaApp &amp; Net Banking</div>
+      <h2 class="sec-title">Your bank in<br>your pocket</h2>
+      <p class="sec-sub">Everything you'd do at a branch — done in seconds from your phone.</p>
+      <div class="digital-features">
+        <div class="dfeat">
+          <div class="dfeat-icon">💸</div>
+          <div>
+            <h4>Instant UPI &amp; IMPS Transfers</h4>
+            <p>Send money 24/7 using UPI ID, mobile number, or account number — no daily limit for verified customers.</p>
+          </div>
+        </div>
+        <div class="dfeat">
+          <div class="dfeat-icon">🤖</div>
+          <div>
+            <h4>Nova AI Spend Insights</h4>
+            <p>Automatic categorisation of every transaction with monthly reports on where your money goes.</p>
+          </div>
+        </div>
+        <div class="dfeat">
+          <div class="dfeat-icon">🔐</div>
+          <div>
+            <h4>Biometric Login &amp; 2FA</h4>
+            <p>Face ID, fingerprint login, and OTP confirmation on every sensitive action. Your money stays yours.</p>
+          </div>
+        </div>
+        <div class="dfeat">
+          <div class="dfeat-icon">📋</div>
+          <div>
+            <h4>Instant Statements &amp; IT Docs</h4>
+            <p>Download account statements, Form 16A, and interest certificates instantly — no branch visit needed.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CARDS -->
+<section class="cards-section" id="cards">
+  <div class="eyebrow">Debit &amp; Credit Cards</div>
+  <h2 class="sec-title">A card for every spend</h2>
+  <p class="sec-sub">Earn rewards on every swipe and enjoy exclusive privileges wherever you go.</p>
+  <div class="cards-grid">
+    <div class="card-item">
+      <div class="card-visual cv-classic">
+        <div class="card-chip">💳</div>
+        <div class="card-num">•••• •••• •••• 4821</div>
+        <div class="card-type">Classic</div>
+      </div>
+      <div class="card-info">
+        <h3>Nova Classic Debit Card</h3>
+        <p>Free for life. Works at 50M+ merchants worldwide, 1 reward point per ₹100 spent.</p>
+        <div class="card-perks">
+          <span class="perk-tag">Free Forever</span>
+          <span class="perk-tag">1X Rewards</span>
+          <span class="perk-tag">Global Access</span>
+        </div>
+        <a href="#open" class="btn-primary" style="display:block;text-align:center;font-size:0.84rem;padding:10px;">Get This Card</a>
+      </div>
+    </div>
+    <div class="card-item">
+      <div class="card-visual cv-gold">
+        <div class="card-chip">💳</div>
+        <div class="card-num">•••• •••• •••• 9214</div>
+        <div class="card-type">Gold</div>
+      </div>
+      <div class="card-info">
+        <h3>Nova Gold Credit Card</h3>
+        <p>5X rewards on dining and travel. Complimentary airport lounge access twice a year.</p>
+        <div class="card-perks">
+          <span class="perk-tag">5X Dining</span>
+          <span class="perk-tag">Lounge Access</span>
+          <span class="perk-tag">Zero FX Fee</span>
+        </div>
+        <a href="#open" class="btn-primary" style="display:block;text-align:center;font-size:0.84rem;padding:10px;">Apply Now</a>
+      </div>
+    </div>
+    <div class="card-item">
+      <div class="card-visual cv-platinum">
+        <div class="card-chip">💳</div>
+        <div class="card-num">•••• •••• •••• 7731</div>
+        <div class="card-type">Platinum</div>
+      </div>
+      <div class="card-info">
+        <h3>Nova Platinum Credit Card</h3>
+        <p>10X rewards everywhere, unlimited lounge access, concierge service, and ₹10L travel insurance.</p>
+        <div class="card-perks">
+          <span class="perk-tag">10X Rewards</span>
+          <span class="perk-tag">Unlimited Lounge</span>
+          <span class="perk-tag">Concierge</span>
+        </div>
+        <a href="#open" class="btn-primary" style="display:block;text-align:center;font-size:0.84rem;padding:10px;">Apply Now</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BRANCH LOCATOR -->
+<section class="branch" id="branch">
+  <div class="eyebrow">Branch &amp; ATM</div>
+  <h2 class="sec-title">We're close to you</h2>
+  <p class="sec-sub">2,400+ branches and 8,000+ ATMs across India. Find the one nearest to you.</p>
+  <div class="branch-inner">
+    <div>
+      <div class="branch-search">
+        <input class="branch-input" type="text" placeholder="Enter city, PIN code or area…" />
+        <button class="branch-search-btn">Search</button>
+      </div>
+      <div class="branch-list">
+        <div class="branch-item">
+          <div>
+            <h4>Machilipatnam Main Branch</h4>
+            <p>Gandhi Nagar, Machilipatnam — 521001 · Mon–Sat 9AM–5PM</p>
+          </div>
+          <div class="branch-dist">0.8 km</div>
+        </div>
+        <div class="branch-item">
+          <div>
+            <h4>Vijayawada City Branch</h4>
+            <p>MG Road, Vijayawada — 520010 · Mon–Sat 9AM–5PM</p>
+          </div>
+          <div class="branch-dist">58 km</div>
+        </div>
+        <div class="branch-item">
+          <div>
+            <h4>Hyderabad HITECH Branch</h4>
+            <p>HITECH City, Hyderabad — 500081 · Mon–Sat 9AM–6PM</p>
+          </div>
+          <div class="branch-dist">280 km</div>
+        </div>
+      </div>
+    </div>
+    <div class="branch-map">
+      <div class="branch-map-icon">🗺️</div>
+      <div>Map view available in the NovaApp</div>
+    </div>
+  </div>
+</section>
+
+<!-- OPEN ACCOUNT -->
+<section class="open-acct" id="open">
+  <div class="open-inner">
+    <div>
+      <div class="eyebrow">Open an Account</div>
+      <h2 class="sec-title">Ready in 10 minutes,<br>fully online</h2>
+      <p class="sec-sub">No paperwork. No branch visit. Just your phone, your Aadhaar, and your PAN.</p>
+      <div class="open-steps">
+        <div class="ostep">
+          <div class="ostep-num">1</div>
+          <div>
+            <h4>Fill the form</h4>
+            <p>Your name, mobile number, and email — takes under 2 minutes.</p>
+          </div>
+        </div>
+        <div class="ostep">
+          <div class="ostep-num">2</div>
+          <div>
+            <h4>Complete Video KYC</h4>
+            <p>A short video call with our agent — verify your Aadhaar and PAN instantly.</p>
+          </div>
+        </div>
+        <div class="ostep">
+          <div class="ostep-num">3</div>
+          <div>
+            <h4>Get your account number</h4>
+            <p>Receive your account number, IFSC, and debit card details via SMS and email.</p>
+          </div>
+        </div>
+        <div class="ostep">
+          <div class="ostep-num">4</div>
+          <div>
+            <h4>Start banking</h4>
+            <p>Log into NovaApp, deposit your first amount, and you're fully active.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="open-form">
+        <div class="form-row">
+          <div class="fgroup">
+            <label>First Name</label>
+            <input type="text" placeholder="Abhinay" />
+          </div>
+          <div class="fgroup">
+            <label>Last Name</label>
+            <input type="text" placeholder="Joshi" />
+          </div>
+        </div>
+        <div class="fgroup">
+          <label>Mobile Number</label>
+          <input type="tel" placeholder="+91 98765 43210" />
+        </div>
+        <div class="fgroup">
+          <label>Email Address</label>
+          <input type="email" placeholder="abhinay@email.com" />
+        </div>
+        <div class="fgroup">
+          <label>Account Type</label>
+          <select>
+            <option>Nova Savings Account (Zero Balance)</option>
+            <option>Nova Prime Account</option>
+            <option>Nova Fixed Deposit</option>
+          </select>
+        </div>
+        <div class="fgroup">
+          <label>City</label>
+          <input type="text" placeholder="Machilipatnam" />
+        </div>
+        <button class="btn-primary" style="width:100%;padding:15px;font-size:0.92rem;">
+          Open My Account →
+        </button>
+        <p style="font-size:0.72rem;color:var(--slate);text-align:center;">
+          By submitting, you agree to our Terms of Service and Privacy Policy.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="nav-brand">
+        <div class="nav-logo">N</div>
+        <div style="font-family:'Playfair Display',serif;font-size:1rem;color:var(--white);">Novascot Bank</div>
+      </div>
+      <p>Banking for every Indian — simple, secure, and always within reach.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Products</h4>
+      <a href="#">Savings Account</a>
+      <a href="#">Fixed Deposits</a>
+      <a href="#">Home Loans</a>
+      <a href="#">Personal Loans</a>
+      <a href="#">Credit Cards</a>
+    </div>
+    <div class="footer-col">
+      <h4>Support</h4>
+      <a href="#">Help Centre</a>
+      <a href="#">Lost Card?</a>
+      <a href="#">Raise a Complaint</a>
+      <a href="#">Branch &amp; ATM</a>
+    </div>
+    <div class="footer-col">
+      <h4>Legal</h4>
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Service</a>
+      <a href="#">MITC</a>
+      <a href="#">RBI Ombudsman</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 Novascot Bank Ltd. All rights reserved.</p>
+    <p class="footer-reg">CIN: U65191MH2010PLC123456 · RBI Lic. No. RBI/2010/123 · DICGC Member · IFSC: NOVA0000001</p>
+  </div>
+</footer>
+
+<script>
+  function fmtINR(n) {
+    if (n >= 10000000) return '₹' + (n/10000000).toFixed(2) + ' Cr';
+    if (n >= 100000)   return '₹' + (n/100000).toFixed(2) + ' L';
+    return '₹' + Math.round(n).toLocaleString('en-IN');
+  }
+
+  function calcEmi() {
+    const P = parseFloat(document.getElementById('loanAmt').value);
+    const annualRate = parseFloat(document.getElementById('loanType').value);
+    const r = annualRate / 100 / 12;
+    const n = parseFloat(document.getElementById('loanTenure').value) * 12;
+
+    document.getElementById('loanAmtLbl').textContent = fmtINR(P);
+    document.getElementById('loanTenureLbl').textContent = document.getElementById('loanTenure').value + ' years';
+
+    const emi = P * r * Math.pow(1+r, n) / (Math.pow(1+r, n) - 1);
+    const total = emi * n;
+    const interest = total - P;
+
+    document.getElementById('emiVal').textContent      = fmtINR(emi);
+    document.getElementById('emiMonths').textContent   = n;
+    document.getElementById('emiPrincipal').textContent= fmtINR(P);
+    document.getElementById('emiInterest').textContent = fmtINR(interest);
+    document.getElementById('emiTotal').textContent    = fmtINR(total);
+  }
+
+  calcEmi();
+</script>
+</body>
+</html>
