@@ -1,0 +1,1061 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Novascot Bank — Corporate Banking</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy:      #0B1F3A;
+      --navy-mid:  #112A4E;
+      --navy-light:#1A3A65;
+      --gold:      #C9A84C;
+      --gold-light:#E2C27A;
+      --slate:     #8CA0B8;
+      --offwhite:  #F4F1EA;
+      --white:     #FFFFFF;
+      --danger:    #C0392B;
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--navy);
+      color: var(--offwhite);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      line-height: 1.7;
+    }
+
+    /* ── TICKER ── */
+    .ticker {
+      background: var(--gold);
+      color: var(--navy);
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem;
+      padding: 6px 0;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+    .ticker-track {
+      display: inline-block;
+      animation: ticker 28s linear infinite;
+    }
+    .ticker-track span { margin-right: 60px; }
+    .ticker-track .up   { color: #1a5c2a; }
+    .ticker-track .down { color: var(--danger); }
+    @keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+    /* ── NAV ── */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 22px 8%;
+      background: rgba(11,31,58,0.95);
+      backdrop-filter: blur(12px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid rgba(201,168,76,0.2);
+    }
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .nav-logo {
+      width: 38px; height: 38px;
+      background: var(--gold);
+      border-radius: 6px;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--navy);
+    }
+    .nav-brand h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--white);
+      letter-spacing: 0.02em;
+    }
+    .nav-brand small {
+      display: block;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.6rem;
+      color: var(--gold);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+    .nav-links { display: flex; gap: 32px; align-items: center; }
+    .nav-links a {
+      text-decoration: none;
+      color: var(--slate);
+      font-size: 0.88rem;
+      font-weight: 400;
+      letter-spacing: 0.03em;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--gold); }
+    .nav-cta {
+      padding: 9px 22px;
+      border: 1px solid var(--gold);
+      border-radius: 4px;
+      color: var(--gold) !important;
+      font-weight: 500 !important;
+      transition: background 0.2s, color 0.2s !important;
+    }
+    .nav-cta:hover { background: var(--gold) !important; color: var(--navy) !important; }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 88vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      padding: 0 8%;
+      gap: 60px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 70% at 80% 50%, rgba(201,168,76,0.07) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 40% at 10% 80%, rgba(26,58,101,0.6) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .hero-tag {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.18em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .hero-tag::before {
+      content: '';
+      width: 28px; height: 1px;
+      background: var(--gold);
+      display: inline-block;
+    }
+    .hero h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.2rem, 4vw, 3.4rem);
+      font-weight: 700;
+      line-height: 1.2;
+      color: var(--white);
+      margin-bottom: 24px;
+    }
+    .hero h2 em {
+      font-style: normal;
+      color: var(--gold);
+    }
+    .hero-sub {
+      color: var(--slate);
+      font-size: 1rem;
+      max-width: 480px;
+      margin-bottom: 40px;
+    }
+    .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; }
+    .btn-primary {
+      padding: 14px 30px;
+      background: var(--gold);
+      color: var(--navy);
+      border: none;
+      border-radius: 4px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .btn-primary:hover { background: var(--gold-light); transform: translateY(-1px); }
+    .btn-outline {
+      padding: 14px 30px;
+      background: transparent;
+      color: var(--offwhite);
+      border: 1px solid rgba(244,241,234,0.3);
+      border-radius: 4px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 400;
+      cursor: pointer;
+      transition: border-color 0.2s, color 0.2s;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .btn-outline:hover { border-color: var(--offwhite); color: var(--white); }
+
+    /* ── HERO CARD PANEL ── */
+    .hero-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      position: relative;
+      z-index: 1;
+    }
+    .panel-card {
+      background: var(--navy-mid);
+      border: 1px solid rgba(201,168,76,0.15);
+      border-radius: 10px;
+      padding: 20px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: border-color 0.2s;
+    }
+    .panel-card:hover { border-color: rgba(201,168,76,0.4); }
+    .panel-card-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--slate);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+    .panel-card-value {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      color: var(--white);
+    }
+    .panel-card-badge {
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem;
+    }
+    .badge-green { background: rgba(26,92,42,0.3); color: #4ade80; }
+    .badge-blue  { background: rgba(56,189,248,0.15); color: #7dd3fc; }
+    .badge-gold  { background: rgba(201,168,76,0.15); color: var(--gold); }
+
+    /* ── STATS STRIP ── */
+    .stats-strip {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border-top: 1px solid rgba(201,168,76,0.15);
+      border-bottom: 1px solid rgba(201,168,76,0.15);
+    }
+    .stat-item {
+      padding: 36px 8%;
+      border-right: 1px solid rgba(201,168,76,0.12);
+    }
+    .stat-item:last-child { border-right: none; }
+    .stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem;
+      color: var(--gold);
+      font-weight: 600;
+      display: block;
+    }
+    .stat-label {
+      font-size: 0.82rem;
+      color: var(--slate);
+      margin-top: 4px;
+    }
+
+    /* ── SERVICES ── */
+    .services { padding: 90px 8%; }
+    .section-eyebrow {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.18em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.6rem, 3vw, 2.4rem);
+      color: var(--white);
+      margin-bottom: 12px;
+    }
+    .section-sub {
+      color: var(--slate);
+      font-size: 0.95rem;
+      max-width: 520px;
+      margin-bottom: 50px;
+    }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: rgba(201,168,76,0.12);
+      border: 1px solid rgba(201,168,76,0.12);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    .service-item {
+      background: var(--navy-mid);
+      padding: 36px 30px;
+      transition: background 0.2s;
+      position: relative;
+    }
+    .service-item:hover { background: var(--navy-light); }
+    .service-icon {
+      width: 42px; height: 42px;
+      background: rgba(201,168,76,0.1);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem;
+      margin-bottom: 18px;
+    }
+    .service-item h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      color: var(--white);
+      margin-bottom: 10px;
+    }
+    .service-item p {
+      font-size: 0.87rem;
+      color: var(--slate);
+      line-height: 1.6;
+    }
+    .service-arrow {
+      position: absolute;
+      top: 36px; right: 30px;
+      color: var(--gold);
+      font-size: 1.1rem;
+      opacity: 0;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+    .service-item:hover .service-arrow { opacity: 1; transform: translateX(4px); }
+
+    /* ── ACCOUNTS ── */
+    .accounts { padding: 90px 8%; background: var(--navy-mid); }
+    .accounts-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-top: 50px;
+    }
+    .account-card {
+      border: 1px solid rgba(201,168,76,0.15);
+      border-radius: 12px;
+      padding: 36px 28px;
+      position: relative;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+    .account-card:hover { transform: translateY(-4px); border-color: rgba(201,168,76,0.4); }
+    .account-card.featured {
+      border-color: var(--gold);
+      background: linear-gradient(135deg, rgba(201,168,76,0.08), rgba(201,168,76,0.02));
+    }
+    .featured-badge {
+      position: absolute;
+      top: -12px; left: 28px;
+      background: var(--gold);
+      color: var(--navy);
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 4px 14px;
+      border-radius: 20px;
+    }
+    .account-tier {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.15em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .account-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      color: var(--white);
+      margin-bottom: 8px;
+    }
+    .account-rate {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      color: var(--gold);
+      margin: 18px 0 8px;
+    }
+    .account-rate span { font-size: 0.9rem; color: var(--slate); font-family: 'DM Sans', sans-serif; }
+    .account-features {
+      list-style: none;
+      margin: 20px 0 28px;
+    }
+    .account-features li {
+      font-size: 0.86rem;
+      color: var(--slate);
+      padding: 7px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .account-features li::before {
+      content: '✓';
+      color: var(--gold);
+      font-size: 0.75rem;
+      flex-shrink: 0;
+    }
+
+    /* ── DIGITAL BANKING ── */
+    .digital { padding: 90px 8%; }
+    .digital-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+    .digital-steps { margin-top: 36px; }
+    .step {
+      display: flex;
+      gap: 20px;
+      margin-bottom: 28px;
+      align-items: flex-start;
+    }
+    .step-num {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--gold);
+      background: rgba(201,168,76,0.1);
+      border: 1px solid rgba(201,168,76,0.25);
+      border-radius: 50%;
+      width: 34px; height: 34px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .step h4 {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: var(--white);
+      margin-bottom: 5px;
+    }
+    .step p { font-size: 0.85rem; color: var(--slate); }
+    .digital-visual {
+      background: var(--navy-mid);
+      border: 1px solid rgba(201,168,76,0.15);
+      border-radius: 16px;
+      padding: 32px;
+    }
+    .dv-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 28px;
+    }
+    .dv-header-title {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      color: var(--slate);
+      text-transform: uppercase;
+    }
+    .dv-header-status {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.75rem;
+      color: #4ade80;
+    }
+    .dv-header-status::before {
+      content: '';
+      width: 6px; height: 6px;
+      background: #4ade80;
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+    .dv-balance {
+      margin-bottom: 28px;
+    }
+    .dv-balance-label { font-size: 0.78rem; color: var(--slate); margin-bottom: 4px; }
+    .dv-balance-amount {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem;
+      color: var(--white);
+    }
+    .dv-balance-change { font-size: 0.8rem; color: #4ade80; margin-top: 4px; }
+    .dv-transactions { display: flex; flex-direction: column; gap: 12px; }
+    .txn {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .txn-info { display: flex; align-items: center; gap: 12px; }
+    .txn-icon {
+      width: 32px; height: 32px;
+      background: rgba(201,168,76,0.1);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.9rem;
+    }
+    .txn-name { font-size: 0.87rem; color: var(--white); }
+    .txn-date { font-size: 0.75rem; color: var(--slate); }
+    .txn-amount { font-family: 'DM Mono', monospace; font-size: 0.88rem; }
+    .txn-amount.credit { color: #4ade80; }
+    .txn-amount.debit  { color: #f87171; }
+
+    /* ── TRUST BAR ── */
+    .trust { padding: 60px 8%; border-top: 1px solid rgba(201,168,76,0.1); }
+    .trust-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 30px;
+    }
+    .trust-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--slate);
+      font-size: 0.85rem;
+    }
+    .trust-icon { font-size: 1.4rem; }
+
+    /* ── CONTACT ── */
+    .contact { padding: 90px 8%; background: var(--navy-mid); }
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+      margin-top: 50px;
+    }
+    .contact-info h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      color: var(--white);
+      margin-bottom: 16px;
+    }
+    .contact-info p { color: var(--slate); font-size: 0.9rem; margin-bottom: 28px; }
+    .contact-detail {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 18px;
+      color: var(--offwhite);
+      font-size: 0.88rem;
+    }
+    .contact-detail-icon {
+      width: 36px; height: 36px;
+      background: rgba(201,168,76,0.1);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+    .contact-form { display: flex; flex-direction: column; gap: 16px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .form-group { display: flex; flex-direction: column; gap: 6px; }
+    .form-group label {
+      font-size: 0.78rem;
+      font-family: 'DM Mono', monospace;
+      letter-spacing: 0.08em;
+      color: var(--slate);
+      text-transform: uppercase;
+    }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(201,168,76,0.2);
+      border-radius: 6px;
+      padding: 12px 16px;
+      color: var(--white);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.88rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus { border-color: var(--gold); }
+    .form-group textarea { resize: vertical; min-height: 100px; }
+    .form-group select option { background: var(--navy-mid); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #060f1c;
+      padding: 50px 8% 30px;
+      border-top: 1px solid rgba(201,168,76,0.12);
+    }
+    .footer-top {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 40px;
+      margin-bottom: 40px;
+    }
+    .footer-brand p {
+      color: var(--slate);
+      font-size: 0.85rem;
+      margin-top: 12px;
+      max-width: 260px;
+    }
+    .footer-col h4 {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.15em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .footer-col a {
+      display: block;
+      text-decoration: none;
+      color: var(--slate);
+      font-size: 0.85rem;
+      margin-bottom: 10px;
+      transition: color 0.2s;
+    }
+    .footer-col a:hover { color: var(--offwhite); }
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 28px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .footer-bottom p { color: var(--slate); font-size: 0.78rem; }
+    .footer-reg {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.68rem;
+      color: rgba(140,160,184,0.5);
+      letter-spacing: 0.05em;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: 1fr; padding-top: 60px; padding-bottom: 60px; }
+      .hero-panel { display: none; }
+      .stats-strip { grid-template-columns: repeat(2, 1fr); }
+      .services-grid { grid-template-columns: 1fr 1fr; }
+      .accounts-grid { grid-template-columns: 1fr; }
+      .digital-inner { grid-template-columns: 1fr; }
+      .contact-grid { grid-template-columns: 1fr; }
+      .footer-top { grid-template-columns: 1fr 1fr; }
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-track">
+    <span>NVSCT <span class="up">▲ 2.14%</span></span>
+    <span>USD/INR: 83.42</span>
+    <span>REPO RATE: 6.50%</span>
+    <span>SENSEX <span class="up">▲ 0.87%</span></span>
+    <span>NIFTY50 <span class="down">▼ 0.23%</span></span>
+    <span>GOLD: ₹71,240/10g</span>
+    <span>T-BILL 91D: 6.78%</span>
+    <span>NVSCT <span class="up">▲ 2.14%</span></span>
+    <span>USD/INR: 83.42</span>
+    <span>REPO RATE: 6.50%</span>
+    <span>SENSEX <span class="up">▲ 0.87%</span></span>
+    <span>NIFTY50 <span class="down">▼ 0.23%</span></span>
+    <span>GOLD: ₹71,240/10g</span>
+    <span>T-BILL 91D: 6.78%</span>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-brand">
+    <div class="nav-logo">N</div>
+    <h1>Novascot Bank
+      <small>Corporate Banking</small>
+    </h1>
+  </div>
+  <div class="nav-links">
+    <a href="#services">Services</a>
+    <a href="#accounts">Accounts</a>
+    <a href="#digital">Digital</a>
+    <a href="#contact">Contact</a>
+    <a href="#contact" class="nav-cta">Open Account</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-tag">Corporate &amp; Institutional Banking</div>
+    <h2>Capital that moves<br>at the speed of<br><em>your ambition</em></h2>
+    <p class="hero-sub">Novascot Bank delivers institutional-grade financial infrastructure for enterprises — from working capital solutions to cross-border treasury management.</p>
+    <div class="hero-actions">
+      <a href="#contact" class="btn-primary">Open Corporate Account</a>
+      <a href="#services" class="btn-outline">Explore Services</a>
+    </div>
+  </div>
+  <div class="hero-panel">
+    <div class="panel-card">
+      <div>
+        <div class="panel-card-label">Total AUM</div>
+        <div class="panel-card-value">₹4.8 Cr</div>
+      </div>
+      <span class="panel-card-badge badge-green">+12.4% YTD</span>
+    </div>
+    <div class="panel-card">
+      <div>
+        <div class="panel-card-label">Active Credit Lines</div>
+        <div class="panel-card-value">₹1.2 Cr</div>
+      </div>
+      <span class="panel-card-badge badge-blue">3 Active</span>
+    </div>
+    <div class="panel-card">
+      <div>
+        <div class="panel-card-label">FX Transactions (MTD)</div>
+        <div class="panel-card-value">USD 84,200</div>
+      </div>
+      <span class="panel-card-badge badge-gold">Hedged</span>
+    </div>
+    <div class="panel-card">
+      <div>
+        <div class="panel-card-label">Relationship Manager</div>
+        <div class="panel-card-value" style="font-size:1.1rem;">Priya Menon</div>
+      </div>
+      <span class="panel-card-badge badge-green">● Available</span>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-strip">
+  <div class="stat-item">
+    <span class="stat-num">₹28,000 Cr</span>
+    <div class="stat-label">Assets Under Management</div>
+  </div>
+  <div class="stat-item">
+    <span class="stat-num">4,200+</span>
+    <div class="stat-label">Corporate Clients Served</div>
+  </div>
+  <div class="stat-item">
+    <span class="stat-num">38</span>
+    <div class="stat-label">Countries with FX Coverage</div>
+  </div>
+  <div class="stat-item">
+    <span class="stat-num">99.97%</span>
+    <div class="stat-label">Transaction Uptime SLA</div>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section class="services" id="services">
+  <div class="section-eyebrow">What We Offer</div>
+  <h2 class="section-title">Corporate Financial Services</h2>
+  <p class="section-sub">Purpose-built solutions for businesses that operate at scale — from SMEs to large enterprises.</p>
+  <div class="services-grid">
+    <div class="service-item">
+      <div class="service-icon">🏦</div>
+      <h3>Working Capital Finance</h3>
+      <p>Overdraft facilities, invoice discounting, and supply chain financing structured around your operating cycle.</p>
+      <span class="service-arrow">→</span>
+    </div>
+    <div class="service-item">
+      <div class="service-icon">🌐</div>
+      <h3>Trade Finance</h3>
+      <p>Letters of credit, bank guarantees, export financing, and documentary collections for cross-border trade.</p>
+      <span class="service-arrow">→</span>
+    </div>
+    <div class="service-item">
+      <div class="service-icon">💱</div>
+      <h3>Treasury &amp; FX</h3>
+      <p>Hedging strategies, forward contracts, and multi-currency accounts to manage your FX exposure.</p>
+      <span class="service-arrow">→</span>
+    </div>
+    <div class="service-item">
+      <div class="service-icon">📈</div>
+      <h3>Term Loans &amp; Project Finance</h3>
+      <p>Structured debt solutions for capital expenditure, acquisitions, and long-horizon infrastructure projects.</p>
+      <span class="service-arrow">→</span>
+    </div>
+    <div class="service-item">
+      <div class="service-icon">💼</div>
+      <h3>Cash Management</h3>
+      <p>Centralised liquidity management, automated sweeps, and real-time visibility across all accounts.</p>
+      <span class="service-arrow">→</span>
+    </div>
+    <div class="service-item">
+      <div class="service-icon">🔒</div>
+      <h3>Escrow &amp; Custody</h3>
+      <p>Independent escrow arrangements and custodial services for M&amp;A transactions and asset safekeeping.</p>
+      <span class="service-arrow">→</span>
+    </div>
+  </div>
+</section>
+
+<!-- ACCOUNTS -->
+<section class="accounts" id="accounts">
+  <div class="section-eyebrow">Account Tiers</div>
+  <h2 class="section-title">Built for Every Stage of Growth</h2>
+  <p class="section-sub">Choose the account structure that fits your organisation's size and transaction complexity.</p>
+  <div class="accounts-grid">
+    <div class="account-card">
+      <div class="account-tier">Business</div>
+      <h3>Current Account</h3>
+      <p style="color:var(--slate);font-size:0.85rem;">For growing businesses needing reliable day-to-day banking.</p>
+      <div class="account-rate">₹0 <span>/ monthly fee</span></div>
+      <ul class="account-features">
+        <li>Unlimited NEFT &amp; RTGS transfers</li>
+        <li>Dedicated relationship manager</li>
+        <li>GSTIN-linked invoicing</li>
+        <li>Up to ₹50L free cash deposit/month</li>
+      </ul>
+      <a href="#contact" class="btn-outline" style="width:100%;text-align:center;">Apply Now</a>
+    </div>
+    <div class="account-card featured">
+      <span class="featured-badge">Most Popular</span>
+      <div class="account-tier">Corporate</div>
+      <h3>Corporate Current Account</h3>
+      <p style="color:var(--slate);font-size:0.85rem;">For mid-market companies with complex banking needs.</p>
+      <div class="account-rate">₹2,500 <span>/ month</span></div>
+      <ul class="account-features">
+        <li>Multi-user access with maker-checker</li>
+        <li>API banking integration</li>
+        <li>Priority FX desk access</li>
+        <li>Unlimited cash deposit</li>
+        <li>Dedicated credit analyst</li>
+      </ul>
+      <a href="#contact" class="btn-primary" style="width:100%;text-align:center;">Apply Now</a>
+    </div>
+    <div class="account-card">
+      <div class="account-tier">Institutional</div>
+      <h3>Institutional Account</h3>
+      <p style="color:var(--slate);font-size:0.85rem;">For large enterprises and financial institutions.</p>
+      <div class="account-rate">Custom <span>pricing</span></div>
+      <ul class="account-features">
+        <li>Bespoke treasury solutions</li>
+        <li>White-glove onboarding</li>
+        <li>24/7 senior banker hotline</li>
+        <li>Custom SLA agreement</li>
+        <li>Multi-entity consolidation</li>
+      </ul>
+      <a href="#contact" class="btn-outline" style="width:100%;text-align:center;">Talk to Us</a>
+    </div>
+  </div>
+</section>
+
+<!-- DIGITAL BANKING -->
+<section class="digital" id="digital">
+  <div class="digital-inner">
+    <div>
+      <div class="section-eyebrow">Digital Platform</div>
+      <h2 class="section-title">Banking that works<br>while you do</h2>
+      <p class="section-sub">Our corporate internet banking platform gives your finance team complete control — approvals, payments, reports, all in one place.</p>
+      <div class="digital-steps">
+        <div class="step">
+          <div class="step-num">01</div>
+          <div>
+            <h4>Bulk Payment Processing</h4>
+            <p>Upload salary files, vendor batches, and tax payments in XLSX or XML — process thousands of transfers in a single click.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">02</div>
+          <div>
+            <h4>Role-Based Access Control</h4>
+            <p>Configure initiator, verifier, and approver roles with multi-level authentication for every transaction threshold.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">03</div>
+          <div>
+            <h4>Real-Time MIS Reports</h4>
+            <p>Download GST-ready statements, cash flow summaries, and audit-ready transaction logs at any time.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="digital-visual">
+      <div class="dv-header">
+        <div class="dv-header-title">Corporate Dashboard</div>
+        <div class="dv-header-status">Live</div>
+      </div>
+      <div class="dv-balance">
+        <div class="dv-balance-label">Available Balance</div>
+        <div class="dv-balance-amount">₹2,84,61,450</div>
+        <div class="dv-balance-change">↑ ₹12,40,000 from yesterday</div>
+      </div>
+      <div class="dv-transactions">
+        <div class="txn">
+          <div class="txn-info">
+            <div class="txn-icon">📦</div>
+            <div>
+              <div class="txn-name">Vendor Payment — Rajan Exports</div>
+              <div class="txn-date">Today, 11:42 AM · RTGS</div>
+            </div>
+          </div>
+          <div class="txn-amount debit">−₹8,40,000</div>
+        </div>
+        <div class="txn">
+          <div class="txn-info">
+            <div class="txn-icon">💰</div>
+            <div>
+              <div class="txn-name">Client Receipt — Infosys Ltd.</div>
+              <div class="txn-date">Today, 09:15 AM · NEFT</div>
+            </div>
+          </div>
+          <div class="txn-amount credit">+₹22,00,000</div>
+        </div>
+        <div class="txn">
+          <div class="txn-info">
+            <div class="txn-icon">🌐</div>
+            <div>
+              <div class="txn-name">FX Purchase — USD 10,000</div>
+              <div class="txn-date">Yesterday · Forex Desk</div>
+            </div>
+          </div>
+          <div class="txn-amount debit">−₹8,34,200</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST -->
+<div class="trust">
+  <div class="trust-inner">
+    <div class="trust-item"><span class="trust-icon">🏛️</span> RBI Scheduled Commercial Bank</div>
+    <div class="trust-item"><span class="trust-icon">🔐</span> ISO 27001 Certified</div>
+    <div class="trust-item"><span class="trust-icon">🛡️</span> DICGC Insured Deposits</div>
+    <div class="trust-item"><span class="trust-icon">📋</span> SEBI Registered Custodian</div>
+    <div class="trust-item"><span class="trust-icon">⚡</span> 99.97% Platform Uptime</div>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="section-eyebrow">Get in Touch</div>
+  <h2 class="section-title">Open Your Corporate Account</h2>
+  <p class="section-sub">Our corporate banking team will reach out within one business day.</p>
+  <div class="contact-grid">
+    <div class="contact-info">
+      <h3>Speak with a Relationship Manager</h3>
+      <p>For large enterprises or complex requirements, our senior bankers are available for a direct consultation.</p>
+      <div class="contact-detail">
+        <div class="contact-detail-icon">📞</div>
+        <div>
+          <div style="font-size:0.78rem;color:var(--slate);margin-bottom:2px;">Corporate Helpdesk</div>
+          <div>1800-103-NOVA (6682)</div>
+        </div>
+      </div>
+      <div class="contact-detail">
+        <div class="contact-detail-icon">✉️</div>
+        <div>
+          <div style="font-size:0.78rem;color:var(--slate);margin-bottom:2px;">Email</div>
+          <div>corporate@novascotbank.com</div>
+        </div>
+      </div>
+      <div class="contact-detail">
+        <div class="contact-detail-icon">📍</div>
+        <div>
+          <div style="font-size:0.78rem;color:var(--slate);margin-bottom:2px;">Head Office</div>
+          <div>Novascot Tower, BKC, Mumbai — 400 051</div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="contact-form">
+        <div class="form-row">
+          <div class="form-group">
+            <label>First Name</label>
+            <input type="text" placeholder="Arjun" />
+          </div>
+          <div class="form-group">
+            <label>Last Name</label>
+            <input type="text" placeholder="Sharma" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Company Name</label>
+          <input type="text" placeholder="Your Company Pvt. Ltd." />
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Business Email</label>
+            <input type="email" placeholder="arjun@company.com" />
+          </div>
+          <div class="form-group">
+            <label>Phone</label>
+            <input type="tel" placeholder="+91 98765 43210" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Service Interested In</label>
+          <select>
+            <option value="">Select a service</option>
+            <option>Corporate Current Account</option>
+            <option>Working Capital Finance</option>
+            <option>Trade Finance</option>
+            <option>Treasury &amp; FX</option>
+            <option>Project Finance</option>
+            <option>Institutional Banking</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Message (Optional)</label>
+          <textarea placeholder="Tell us about your requirements..."></textarea>
+        </div>
+        <button class="btn-primary" style="width:100%;padding:16px;">Submit Enquiry →</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="nav-brand">
+        <div class="nav-logo">N</div>
+        <div style="font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--white);">Novascot Bank</div>
+      </div>
+      <p>Institutional-grade banking for businesses that refuse to stand still.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <a href="#">Working Capital</a>
+      <a href="#">Trade Finance</a>
+      <a href="#">Treasury &amp; FX</a>
+      <a href="#">Term Loans</a>
+      <a href="#">Cash Management</a>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <a href="#">About Us</a>
+      <a href="#">Leadership</a>
+      <a href="#">Investor Relations</a>
+      <a href="#">Careers</a>
+      <a href="#">Press Room</a>
+    </div>
+    <div class="footer-col">
+      <h4>Legal</h4>
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Service</a>
+      <a href="#">Grievance Redressal</a>
+      <a href="#">RBI Disclosures</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 Novascot Bank Ltd. All rights reserved.</p>
+    <p class="footer-reg">CIN: U65191MH2010PLC123456 · RBI Lic. No. RBI/2010/123 · DICGC Member</p>
+  </div>
+</footer>
+
+</body>
+</html>
